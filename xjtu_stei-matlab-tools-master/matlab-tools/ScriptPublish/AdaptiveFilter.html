@@ -1,0 +1,783 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+    <title>Adaptive Filter</title>
+    <meta name="generator" content="MATLAB 9.8">
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+    <meta name="DC.date" content="2021-02-04">
+    <meta name="DC.source" content="AdaptiveFilter.m">
+    <style type="text/css">
+    html,
+    body,
+    div,
+    span,
+    applet,
+    object,
+    iframe,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    blockquote,
+    pre,
+    a,
+    abbr,
+    acronym,
+    address,
+    big,
+    cite,
+    code,
+    del,
+    dfn,
+    em,
+    font,
+    img,
+    ins,
+    kbd,
+    q,
+    s,
+    samp,
+    small,
+    strike,
+    strong,
+    sub,
+    sup,
+    tt,
+    var,
+    b,
+    u,
+    i,
+    center,
+    dl,
+    dt,
+    dd,
+    ol,
+    ul,
+    li,
+    fieldset,
+    form,
+    label,
+    legend,
+    table,
+    caption,
+    tbody,
+    tfoot,
+    thead,
+    tr,
+    th,
+    td {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        font-size: 100%;
+        vertical-align: baseline;
+        background: transparent
+    }
+
+    body {
+        line-height: 1
+    }
+
+    ol,
+    ul {
+        list-style: none
+    }
+
+    blockquote,
+    q {
+        quotes: none
+    }
+
+    blockquote:before,
+    blockquote:after,
+    q:before,
+    q:after {
+        content: '';
+        content: none
+    }
+
+    :focus {
+        outine: 0
+    }
+
+    ins {
+        text-decoration: none
+    }
+
+    del {
+        text-decoration: line-through
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0
+    }
+
+    html {
+        min-height: 100%;
+        margin-bottom: 1px;
+    }
+
+    html body {
+        height: 100%;
+        margin: 0px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 10px;
+        color: #000;
+        line-height: 140%;
+        background: #fff none;
+        overflow-y: scroll;
+    }
+
+    html body td {
+        vertical-align: top;
+        text-align: left;
+    }
+
+    h1 {
+        padding: 0px;
+        margin: 0px 0px 25px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.5em;
+        color: #d55000;
+        line-height: 100%;
+        font-weight: normal;
+    }
+
+    h2 {
+        padding: 0px;
+        margin: 0px 0px 8px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.2em;
+        color: #000;
+        font-weight: bold;
+        line-height: 140%;
+        border-bottom: 1px solid #d6d4d4;
+        display: block;
+    }
+
+    h3 {
+        padding: 0px;
+        margin: 0px 0px 5px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.1em;
+        color: #000;
+        font-weight: bold;
+        line-height: 140%;
+    }
+
+    a {
+        color: #005fce;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #005fce;
+        text-decoration: underline;
+    }
+
+    a:visited {
+        color: #004aa0;
+        text-decoration: none;
+    }
+
+    p {
+        padding: 0px;
+        margin: 0px 0px 20px;
+    }
+
+    img {
+        padding: 0px;
+        margin: 0px 0px 20px;
+        border: none;
+    }
+
+    p img,
+    pre img,
+    tt img,
+    li img,
+    h1 img,
+    h2 img {
+        margin-bottom: 0px;
+    }
+
+    ul {
+        padding: 0px;
+        margin: 0px 0px 20px 23px;
+        list-style: square;
+    }
+
+    ul li {
+        padding: 0px;
+        margin: 0px 0px 7px 0px;
+    }
+
+    ul li ul {
+        padding: 5px 0px 0px;
+        margin: 0px 0px 7px 23px;
+    }
+
+    ul li ol li {
+        list-style: decimal;
+    }
+
+    ol {
+        padding: 0px;
+        margin: 0px 0px 20px 0px;
+        list-style: decimal;
+    }
+
+    ol li {
+        padding: 0px;
+        margin: 0px 0px 7px 23px;
+        list-style-type: decimal;
+    }
+
+    ol li ol {
+        padding: 5px 0px 0px;
+        margin: 0px 0px 7px 0px;
+    }
+
+    ol li ol li {
+        list-style-type: lower-alpha;
+    }
+
+    ol li ul {
+        padding-top: 7px;
+    }
+
+    ol li ul li {
+        list-style: square;
+    }
+
+    .content {
+        font-size: 1.2em;
+        line-height: 140%;
+        padding: 20px;
+    }
+
+    pre,
+    code {
+        font-size: 12px;
+    }
+
+    tt {
+        font-size: 1.2em;
+    }
+
+    pre {
+        margin: 0px 0px 20px;
+        font-family: Consolas;
+    }
+
+    pre.codeinput {
+        padding: 10px;
+        border: 1px solid #d3d3d3;
+        background: #f7f7f7;
+    }
+
+    pre.codeoutput {
+        padding: 10px 11px;
+        margin: 0px 0px 20px;
+        color: #4c4c4c;
+    }
+
+    pre.error {
+        color: red;
+    }
+
+    @media print {
+
+        pre.codeinput,
+        pre.codeoutput {
+            word-wrap: break-word;
+            width: 100%;
+        }
+    }
+
+    span.keyword {
+        color: #0000FF
+    }
+
+    span.comment {
+        color: #228B22
+    }
+
+    span.string {
+        color: #A020F0
+    }
+
+    span.untermstring {
+        color: #B20000
+    }
+
+    span.syscmd {
+        color: #B28C00
+    }
+
+    span.typesection {
+        color: #A0522D
+    }
+
+    .footer {
+        width: auto;
+        padding: 10px 0px;
+        margin: 25px 0px 0px;
+        border-top: 1px dotted #878787;
+        font-size: 0.8em;
+        line-height: 140%;
+        font-style: italic;
+        color: #878787;
+        text-align: left;
+        float: none;
+    }
+
+    .footer p {
+        margin: 0px;
+    }
+
+    .footer a {
+        color: #878787;
+    }
+
+    .footer a:hover {
+        color: #878787;
+        text-decoration: underline;
+    }
+
+    .footer a:visited {
+        color: #878787;
+    }
+
+    table th {
+        padding: 7px 5px;
+        text-align: left;
+        vertical-align: middle;
+        border: 1px solid #d6d4d4;
+        font-weight: bold;
+    }
+
+    table td {
+        padding: 7px 5px;
+        text-align: left;
+        vertical-align: top;
+        border: 1px solid #d6d4d4;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <h1>Adaptive Filter</h1>
+        <!--introduction-->
+        <pre>Script by AD1394@XJTU
+&#33258;&#36866;&#24212;&#28388;&#27874;&#27861;&#30340;&#26102;&#38388;&#24207;&#21015;&#39044;&#27979;, &#23545;&#36845;&#20195;&#36827;&#34892;&#21160;&#24577;&#21487;&#35270;&#21270;
+&#23545;&#21608;&#26399;&#22411;&#25968;&#25454;&#26356;&#26377;&#25928;</pre>
+        <pre>&#33258;&#36866;&#24212;&#28388;&#27874;&#23601;&#26159;&#29992;&#22312;&#23398;&#20064;&#36845;&#20195;&#20013;&#24471;&#21040;&#31995;&#25968;&#30340;FIR&#20570;&#39044;&#27979;.
+&#39044;&#27979;&#26102;, &#20196;&#35266;&#27979;&#20540;X[n] = &#23545;&#24212;&#28857;&#39044;&#27979;&#20540;Y[n]. &#38656;&#35201;&#25163;&#21160;&#25351;&#23450;FIR&#38454;&#25968;
+&#23398;&#20064;&#26159; weight &#28369;&#31383;&#27599;&#36208;&#19968;&#26684;&#23398;&#19968;&#27425;, &#20174; n_filterOrder &#21040; n_sampleCount &#31216;&#23398;&#19968;&#36718;
+&#22240;&#32780;, &#26679;&#26412;&#38752;&#21518;&#30340;&#25968;&#25454;(&#23545;&#24403;&#21069;&#36718;&#25968;&#30340;&#39044;&#27979;)&#24433;&#21709;&#26356;&#39640;.</pre>
+        <pre>&#25968;&#25454;&#26684;&#24335;:
+&#26102;&#38388;&#24207;&#21015;&#30340;&#36755;&#20837;&#25968;&#25454; sample &#21644;&#39044;&#27979; y_hat &#26159;&#21015;&#21521;&#37327;,
+&#26435;&#37325; weight &#26159;&#34892;&#21521;&#37327;. &#22914;&#26524;&#19981;&#26159;, &#21017;&#36827;&#34892;&#36716;&#25442;.</pre>
+        <pre>History:
+[rev0.1.3] 2 Feb. 2021:
+&#26356;&#25913;&#20132;&#20114;&#26041;&#24335;;
+&#22686;&#21152;&#20102;&#27979;&#35797;&#20363;&#23376;;
+[rev0.1.2] 2 Feb. 2021:
+&#31227;&#38500;&#20449;&#21495;&#26469;&#28304;&#36873;&#25321;&#30340;&#20132;&#20114;;
+&#26356;&#26032;&#32472;&#22270;&#35821;&#21477;;
+&#26356;&#25913;&#24490;&#29615;&#20013;&#26816;&#26597;&#36923;&#36753;;
+[rev0.1.1] 1 Feb. 2021:
+&#24314;&#31435;&#25991;&#26723;;
+&#22791;&#20221;;
+6 Sept., 2020:
+&#23454;&#29616;&#21151;&#33021;;</pre>
+        <!--/introduction-->
+        <h2>Contents</h2>
+        <div>
+            <ul>
+                <li><a href="#1">&#25968;&#25454;&#20934;&#22791;</a></li>
+                <li><a href="#2">&#21487;&#35270;&#21270;</a></li>
+                <li><a href="#3">(&#21487;&#36873;)&#25351;&#23450;&#21021;&#22987;&#26435;&#37325;</a></li>
+                <li><a href="#4">&#36890;&#36807;&#36845;&#20195;&#20248;&#21270;&#26435;&#37325;</a></li>
+            </ul>
+        </div>
+        <h2 id="1">&#25968;&#25454;&#20934;&#22791;</h2>
+        <pre class="codeinput">clc;
+close <span class="string">all</span>;
+fprintf(<span class="string">'&#33258;&#36866;&#24212;&#28388;&#27874;&#27861;&#30340;&#26102;&#38388;&#24207;&#21015;&#39044;&#27979;\n\n'</span>);
+
+<span class="comment">% &#25968;&#25454;&#36755;&#20837;: &#21482;&#38656;&#35201;&#19968;&#20010;&#21517;&#20026; sample &#30340;&#21521;&#37327;</span>
+t = 0:.08:2.5;
+<span class="comment">% sample = 5.*exp(-.2.*t).*sin(8.*t) + .8.*randn(size(t));</span>
+
+pix2 = 6.283185307179586;
+sample = 2.*sin(pix2 * t) + 2.*sin(pix2 * 3.*t) + .8.*randn(size(t)) + t;
+
+n_sampleCount = length(sample);
+<span class="comment">% &#26102;&#38388;&#24207;&#21015;&#36716;&#25442;&#20026;&#21015;&#21521;&#37327;. &#21482;&#35201;1&#34892;, &#22823;&#27010;&#29575;&#26159;&#34892;&#21521;&#37327;</span>
+<span class="keyword">if</span> size(sample, 1) == 1, sample = sample'; <span class="keyword">end</span>
+</pre>
+        <pre class="codeoutput">&#33258;&#36866;&#24212;&#28388;&#27874;&#27861;&#30340;&#26102;&#38388;&#24207;&#21015;&#39044;&#27979;
+
+</pre>
+        <h2 id="2">&#21487;&#35270;&#21270;</h2>
+        <pre class="codeinput">f = figure(<span class="string">'Name'</span>,<span class="string">'&#33258;&#36866;&#24212;&#28388;&#27874;'</span>, <span class="string">'Units'</span>,<span class="string">'normalized'</span>, <span class="string">'Position'</span>,[.5 0 .5 .4]);
+f.Visible = <span class="string">'off'</span>; <span class="comment">% &#32472;&#22270;&#23436;&#25104;&#21069;&#19981;&#26174;&#31034;, &#21516;&#26102;&#36991;&#20813;&#24433;&#21709;&#29992;&#25143;&#21521;&#21629;&#20196;&#34892;&#36755;&#20837;</span>
+
+<span class="comment">% axData = subplot('position', [.05 .55 .9 .4]);</span>
+axData = subplot(3,1,[1 2]);
+axData.NextPlot = <span class="string">'add'</span>; title(axData, <span class="string">'&#25968;&#25454;&#35270;&#22270;'</span>);
+<span class="comment">% axError = subplot('Position', [.05 .05 .9 .4]);</span>
+axError = subplot(3,1,3);
+axError.NextPlot = <span class="string">'add'</span>; title(axError, <span class="string">'SSE&#35823;&#24046;'</span>);
+plot(axData, sample, <span class="string">'-d'</span>, <span class="string">'LineWidth'</span>, 1.1, <span class="string">'MarkerSize'</span>, 5);
+
+
+
+n_filterOrder = 15;
+
+n_succPredict = 40;
+</pre>
+        <h2 id="3">(&#21487;&#36873;)&#25351;&#23450;&#21021;&#22987;&#26435;&#37325;</h2>
+        <pre class="codeinput">weight = ones(1,n_filterOrder) / n_filterOrder; <span class="comment">% &#24402;&#19968;&#21270;, &#23601;&#26159;&#35753;FIR&#30340;&#22686;&#30410;&#20026;0dB</span>
+k= 1/n_filterOrder; <span class="comment">% &#40657;&#39764;&#27861;&#30340;&#21462;&#20540;</span>
+atten = max(abs(sample));
+atten = max(atten, 1)^2;
+k = k/atten;
+<span class="comment">% &#23545;&#21160;&#24577;&#33539;&#22260;&#22823;&#30340;&#25968;&#25454;&#24517;&#39035;&#36825;&#26679;&#22788;&#29702;&#65292;&#36991;&#20813;&#33707;&#21517;&#20854;&#22937;&#30340;&#21457;&#25955;</span>
+</pre>
+        <h2 id="4">&#36890;&#36807;&#36845;&#20195;&#20248;&#21270;&#26435;&#37325;</h2>
+        <pre class="codeinput">maxIter = 50;				<span class="comment">% &#26368;&#22823;&#36845;&#20195;&#27425;&#25968;</span>
+convFailCount = 0;			<span class="comment">% &#21333;&#27425;&#25910;&#25947;&#22833;&#36133;&#35760;&#24405;</span>
+convWarningThreshold = 3;	<span class="comment">% &#26368;&#22823;&#25910;&#25947;&#22833;&#36133;&#27425;&#25968;, &#36229;&#20986;&#21017;&#27493;&#36827;&#36895;&#24230;&#20943;&#21322;</span>
+sampleRange = max(sample) - min(sample);
+sseThreshold = n_sampleCount*(0.1 * sampleRange).^2;	<span class="comment">% sse&#20540;&#39044;&#35686;</span>
+iterAnimPause = 0.5;		<span class="comment">% &#21160;&#24577;&#32472;&#21046;&#30340;&#24103;&#38388;&#26242;&#20572;</span>
+
+
+y_hat = zeros(n_sampleCount + n_succPredict, 1);
+y_hat(1:n_filterOrder) = sample(1:n_filterOrder);
+<span class="comment">% &#39044;&#27979;&#22120;/&#28388;&#27874;&#22120;&#38656;&#35201;&#33267;&#23569; n_filterOrder &#20010;&#26679;&#26412;, &#20110;&#26159;&#21069;&#38754;&#36825;&#20123;&#28857;&#26080;&#27861;&#39044;&#27979;,</span>
+<span class="comment">% &#25110;&#32773;&#35828;&#39044;&#27979;&#20540;&#23601;&#26159;&#26679;&#26412;&#23454;&#38469;&#20540;</span>
+
+err = zeros(n_sampleCount, 1); <span class="comment">% &#19968;&#20010;&#36941;&#21382;&#36718;&#27425;&#20013;, &#27599;&#20010;&#39044;&#27979;&#28857;&#30340;&#39044;&#27979;&#35823;&#24046;</span>
+sse_log = zeros(1, maxIter); <span class="comment">% &#35760;&#24405;&#27599;&#19968;&#36718;&#20013;&#39044;&#27979;&#35823;&#24046;, &#20026;err&#30340;&#20869;&#31215;</span>
+
+p_yhat = plot(axData, y_hat);
+legend(axData,<span class="string">'&#27979;&#37327;&#20540;'</span>,<span class="string">'&#39044;&#27979;&#20540;'</span>);
+fprintf(<span class="string">'&#24320;&#22987;&#36845;&#20195;&#65306;&#35831;&#26597;&#30475;&#22270;&#24418;&#31383;&#21475;\nGen\tSSE\n'</span>);
+
+iter = 1; <span class="comment">% &#26681;&#25454;&#29616;&#26377;&#25968;&#25454;&#23398;&#20064;&#31532;&#19968;&#27425;. &#21333;&#29420;&#20889;&#20986;&#26469;&#26159;&#20026;&#20102;&#36991;&#20813;&#23545;&#25968;&#32452;&#30340;0&#21495;&#20803;&#32032;&#36827;&#34892;&#32034;&#24341;</span>
+<span class="keyword">for</span> t = n_filterOrder + 1 : n_sampleCount
+	y_hat(t) = weight * sample(t-1:-1:t-n_filterOrder); <span class="comment">% FIR&#21457;&#25381;&#20316;&#29992;</span>
+	err(t) = sample(t) - y_hat(t);
+	weight = weight + 2*k*err(t).*sample(t-1:-1:t-n_filterOrder)';
+<span class="keyword">end</span>
+<span class="keyword">for</span> t = n_sampleCount + 1 : n_sampleCount + n_succPredict <span class="comment">% &#39044;&#27979;&#26410;&#26469;</span>
+	y_hat(t) = weight * y_hat(t-1:-1:t-n_filterOrder);
+<span class="keyword">end</span>
+sse_log(1) = dot(err,err);
+fprintf(<span class="string">'%d\t%.4f\n'</span>, iter, sse_log(iter));
+
+<span class="keyword">for</span> iter = 2:maxIter
+
+	<span class="comment">% &#20854;&#23454;&#23601;&#26159;&#21367;&#31215;conv&#65292;&#20294;&#27599;&#21367;&#19968;&#20010;&#23601;&#35201;&#23454;&#26102;&#26356;&#26032;&#26435;&#37325; &#22240;&#32780;&#19981;&#33021;&#20351;&#29992;conv()&#21629;&#20196;</span>
+	<span class="comment">% &#23545;&#26082;&#26377;&#25968;&#25454;&#30340;&#21487;&#39044;&#27979;&#37096;&#20998;&#65288;n_filterOrder &#21040; n_sampleCount&#65289;&#39034;&#24207;&#36941;&#21382;&#20197;&#23436;&#25104;&#26412;&#36718;&#26435;&#37325;&#26356;&#26032;</span>
+	<span class="keyword">for</span> t = n_filterOrder + 1 : n_sampleCount <span class="comment">% &#23398;&#20064;&#36807;&#21435;</span>
+		y_hat(t) = weight * sample(t-1:-1:t-n_filterOrder);
+		err(t) = sample(t) - y_hat(t);
+		weight = weight + 2*k*err(t).*sample(t-1:-1:t-n_filterOrder)';
+	<span class="keyword">end</span>
+
+	<span class="keyword">for</span> t = n_sampleCount + 1 : n_sampleCount + n_succPredict <span class="comment">% &#39044;&#27979;&#26410;&#26469;</span>
+		y_hat(t) = weight * y_hat(t-1:-1:t-n_filterOrder);
+	<span class="keyword">end</span>
+
+	<span class="comment">% &#36845;&#20195;&#35745;&#31639;&#23436;&#25104;, &#35823;&#24046;&#26680;&#31639;</span>
+	sse_log(iter) = dot(err,err);
+
+	<span class="comment">% &#26356;&#26032;&#21487;&#35270;&#21270;</span>
+	p_yhat.YData = y_hat; <span class="comment">% set(p_yhat, 'YData', y_hat); &#20174;MATLAB 14b&#24320;&#22987;&#25903;&#25345;f.attribute&#20889;&#27861;; set&#24212;&#24323;&#29992;</span>
+	title(axError, sprintf(<span class="string">'&#35823;&#24046;&#35270;&#22270; &#36845;&#20195;%d, SSE=%.4f'</span>, iter, sse_log(iter)));
+	plot(axError, [iter-1 iter],[sse_log(iter-1) sse_log(iter)], <span class="string">'LineWidth'</span>,2);
+	<span class="comment">% &#21487;&#36873;: 'Color',cmap(4,:), &#24471;&#21040;&#22343;&#19968;&#30340;&#32447;&#26465;&#39068;&#33394;&#12290;&#21542;&#21017;&#33719;&#24471;&#24425;&#34425;&#33394;&#32447;&#27573;</span>
+	<span class="comment">% cmap = colormap(autumn(6)); &#21487;&#20197;&#25351;&#23450;rgb</span>
+	fprintf(<span class="string">'%d\t%.4f\n'</span>, iter, sse_log(iter));
+	drawnow <span class="string">limitrate</span>;
+
+	<span class="comment">% SSE&#32477;&#23545;&#20540;&#26816;&#26597;: &#26816;&#26597;&#26412;&#27425;sse&#26159;&#21542;&#36229;&#24046;, &#21457;&#36865;&#35686;&#21578;; &#25110;&#36275;&#22815;&#23567;, &#21487;&#20197;&#32467;&#26463;</span>
+	<span class="keyword">if</span> sse_log(iter) &gt; sseThreshold
+		warning(<span class="string">'SSE&#36807;&#22823;&#12290;&#26816;&#26597;&#25968;&#25454;&#22122;&#22768;/&#20381;&#36182;&#20195;&#25968;/&#23398;&#20064;&#29575;&#65311;'</span>);
+	<span class="keyword">elseif</span> sse_log(iter) &lt; 0.01 * sseThreshold
+		<span class="keyword">if</span> input(<span class="string">'SSE&#24050;&#32463;&#36275;&#22815;&#23567;, &#26159;&#21542;&#32467;&#26463;&#35757;&#32451;? [Y/N]:'</span>, <span class="string">'s'</span>) == <span class="string">'y'</span>
+			<span class="keyword">break</span>;
+		<span class="keyword">else</span>
+			figure(f); <span class="comment">% &#24674;&#22797;&#32472;&#22270;&#20026;&#27963;&#21160;&#31383;&#21475;</span>
+		<span class="keyword">end</span>
+	<span class="keyword">end</span>
+
+	<span class="comment">% SSE&#24046;&#20998;&#20540;&#26816;&#26597;: &#26816;&#26597;sse&#26159;&#21542;&#19979;&#38477;, &#19981;&#19979;&#38477;&#21487;&#33021;&#21457;&#25955;&#25110;&#36807;&#20914;; &#25110;&#19979;&#38477;&#24456;&#23567;, &#21487;&#20197;&#32467;&#26463;</span>
+	<span class="keyword">if</span> sse_log(iter) &gt; sse_log(iter-1)
+		convFailCount = convFailCount + 1;
+		<span class="keyword">if</span> convFailCount &gt; convWarningThreshold
+			convFailCount = 0;
+			k = k/2;
+			warning(<span class="string">'k halved'</span>);
+		<span class="keyword">end</span>
+	<span class="keyword">elseif</span> sse_log(iter-1) - sse_log(iter) &lt; 0.002 * sseThreshold
+		<span class="keyword">break</span>;
+		<span class="keyword">if</span> input(<span class="string">'SSE&#21464;&#21270;&#37327;&#24050;&#32463;&#36275;&#22815;&#23567;, &#26159;&#21542;&#32467;&#26463;&#35757;&#32451;? [Y/N]:'</span>, <span class="string">'s'</span>) == <span class="string">'y'</span>
+			<span class="keyword">break</span>;
+		<span class="keyword">else</span>
+			figure(f); <span class="comment">% &#24674;&#22797;&#32472;&#22270;&#20026;&#27963;&#21160;&#31383;&#21475;</span>
+		<span class="keyword">end</span>
+	<span class="keyword">end</span>
+
+<span class="keyword">end</span>
+
+fprintf(<span class="string">'\n&#23398;&#20064;&#32467;&#26463;, &#21382;&#32463;%d&#36718;, &#27531;&#24046;%.4f\n'</span>, iter, sse_log(iter));
+figure(f);
+</pre>
+        <pre class="codeoutput">&#24320;&#22987;&#36845;&#20195;&#65306;&#35831;&#26597;&#30475;&#22270;&#24418;&#31383;&#21475;
+Gen	SSE
+1	45.3391
+2	14.8527
+3	13.7237
+4	13.3402
+5	12.9091
+6	12.4855
+7	12.0851
+8	11.7086
+9	11.3542
+10	11.0203
+11	10.7055
+12	10.4084
+13	10.1279
+14	9.8628
+15	9.6122
+16	9.3750
+17	9.1505
+18	8.9377
+19	8.7360
+20	8.5446
+21	8.3629
+22	8.1903
+23	8.0263
+24	7.8703
+25	7.7218
+26	7.5804
+27	7.4457
+28	7.3173
+29	7.1949
+30	7.0780
+31	6.9664
+32	6.8598
+33	6.7579
+34	6.6604
+35	6.5672
+36	6.4779
+37	6.3924
+38	6.3105
+39	6.2320
+40	6.1568
+41	6.0845
+42	6.0152
+43	5.9487
+44	5.8847
+45	5.8233
+46	5.7643
+47	5.7075
+48	5.6529
+49	5.6003
+50	5.5497
+
+&#23398;&#20064;&#32467;&#26463;, &#21382;&#32463;50&#36718;, &#27531;&#24046;5.5497
+</pre><img vspace="5" hspace="5" src="AdaptiveFilter_01.png" alt="">
+        <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p>
+    </div>
+    <!--
+##### SOURCE BEGIN #####
+%% Adaptive Filter
+%  Script by AD1394@XJTU
+%  自适应滤波法的时间序列预测, 对迭代进行动态可视化
+%  对周期型数据更有效
+%  
+%  自适应滤波就是用在学习迭代中得到系数的FIR做预测.
+%  预测时, 令观测值X[n] = 对应点预测值Y[n]. 需要手动指定FIR阶数
+%  学习是 weight 滑窗每走一格学一次, 从 n_filterOrder 到 n_sampleCount 称学一轮
+%  因而, 样本靠后的数据(对当前轮数的预测)影响更高.
+%  
+%  数据格式:
+%  时间序列的输入数据 sample 和预测 y_hat 是列向量, 
+%  权重 weight 是行向量. 如果不是, 则进行转换.
+%  
+%  History:
+%  [rev0.1.3] 2 Feb. 2021:
+%  更改交互方式;
+%  增加了测试例子;
+%  [rev0.1.2] 2 Feb. 2021:
+%  移除信号来源选择的交互;
+%  更新绘图语句;
+%  更改循环中检查逻辑;
+%  [rev0.1.1] 1 Feb. 2021:
+%  建立文档;
+%  备份;
+%  6 Sept., 2020:
+%  实现功能;
+
+%% 数据准备
+clc;
+close all;
+fprintf('自适应滤波法的时间序列预测\n\n');
+
+% 数据输入: 只需要一个名为 sample 的向量
+t = 0:.08:2.5;
+% sample = 5.*exp(-.2.*t).*sin(8.*t) + .8.*randn(size(t));
+
+pix2 = 6.283185307179586;
+sample = 2.*sin(pix2 * t) + 2.*sin(pix2 * 3.*t) + .8.*randn(size(t)) + t;
+
+n_sampleCount = length(sample);
+% 时间序列转换为列向量. 只要1行, 大概率是行向量
+if size(sample, 1) == 1, sample = sample'; end
+
+%% 可视化
+
+f = figure('Name','自适应滤波', 'Units','normalized', 'Position',[.5 0 .5 .4]);
+f.Visible = 'off'; % 绘图完成前不显示, 同时避免影响用户向命令行输入
+
+% axData = subplot('position', [.05 .55 .9 .4]);
+axData = subplot(3,1,[1 2]);
+axData.NextPlot = 'add'; title(axData, '数据视图');
+% axError = subplot('Position', [.05 .05 .9 .4]);
+axError = subplot(3,1,3);
+axError.NextPlot = 'add'; title(axError, 'SSE误差');
+plot(axData, sample, '-d', 'LineWidth', 1.1, 'MarkerSize', 5);
+
+
+
+n_filterOrder = 15;
+
+n_succPredict = 40;
+
+
+%% (可选)指定初始权重
+
+weight = ones(1,n_filterOrder) / n_filterOrder; % 归一化, 就是让FIR的增益为0dB
+k= 1/n_filterOrder; % 黑魔法的取值
+atten = max(abs(sample));
+atten = max(atten, 1)^2;
+k = k/atten;
+% 对动态范围大的数据必须这样处理，避免莫名其妙的发散
+
+%% 通过迭代优化权重
+
+maxIter = 50;				% 最大迭代次数
+convFailCount = 0;			% 单次收敛失败记录
+convWarningThreshold = 3;	% 最大收敛失败次数, 超出则步进速度减半
+sampleRange = max(sample) - min(sample);
+sseThreshold = n_sampleCount*(0.1 * sampleRange).^2;	% sse值预警
+iterAnimPause = 0.5;		% 动态绘制的帧间暂停
+
+
+y_hat = zeros(n_sampleCount + n_succPredict, 1);
+y_hat(1:n_filterOrder) = sample(1:n_filterOrder);
+% 预测器/滤波器需要至少 n_filterOrder 个样本, 于是前面这些点无法预测, 
+% 或者说预测值就是样本实际值
+
+err = zeros(n_sampleCount, 1); % 一个遍历轮次中, 每个预测点的预测误差
+sse_log = zeros(1, maxIter); % 记录每一轮中预测误差, 为err的内积
+
+p_yhat = plot(axData, y_hat);
+legend(axData,'测量值','预测值');
+fprintf('开始迭代：请查看图形窗口\nGen\tSSE\n');
+
+iter = 1; % 根据现有数据学习第一次. 单独写出来是为了避免对数组的0号元素进行索引
+for t = n_filterOrder + 1 : n_sampleCount
+	y_hat(t) = weight * sample(t-1:-1:t-n_filterOrder); % FIR发挥作用
+	err(t) = sample(t) - y_hat(t);
+	weight = weight + 2*k*err(t).*sample(t-1:-1:t-n_filterOrder)';
+end
+for t = n_sampleCount + 1 : n_sampleCount + n_succPredict % 预测未来
+	y_hat(t) = weight * y_hat(t-1:-1:t-n_filterOrder);
+end
+sse_log(1) = dot(err,err);
+fprintf('%d\t%.4f\n', iter, sse_log(iter));
+
+for iter = 2:maxIter
+	
+	% 其实就是卷积conv，但每卷一个就要实时更新权重 因而不能使用conv()命令
+	% 对既有数据的可预测部分（n_filterOrder 到 n_sampleCount）顺序遍历以完成本轮权重更新
+	for t = n_filterOrder + 1 : n_sampleCount % 学习过去
+		y_hat(t) = weight * sample(t-1:-1:t-n_filterOrder);
+		err(t) = sample(t) - y_hat(t);
+		weight = weight + 2*k*err(t).*sample(t-1:-1:t-n_filterOrder)';
+	end
+	
+	for t = n_sampleCount + 1 : n_sampleCount + n_succPredict % 预测未来
+		y_hat(t) = weight * y_hat(t-1:-1:t-n_filterOrder);
+	end
+	
+	% 迭代计算完成, 误差核算
+	sse_log(iter) = dot(err,err);
+	
+	% 更新可视化
+	p_yhat.YData = y_hat; % set(p_yhat, 'YData', y_hat); 从MATLAB 14b开始支持f.attribute写法; set应弃用
+	title(axError, sprintf('误差视图 迭代%d, SSE=%.4f', iter, sse_log(iter)));
+	plot(axError, [iter-1 iter],[sse_log(iter-1) sse_log(iter)], 'LineWidth',2);
+	% 可选: 'Color',cmap(4,:), 得到均一的线条颜色。否则获得彩虹色线段
+	% cmap = colormap(autumn(6)); 可以指定rgb
+	fprintf('%d\t%.4f\n', iter, sse_log(iter));
+	drawnow limitrate;
+	
+	% SSE绝对值检查: 检查本次sse是否超差, 发送警告; 或足够小, 可以结束
+	if sse_log(iter) > sseThreshold
+		warning('SSE过大。检查数据噪声/依赖代数/学习率？');
+	elseif sse_log(iter) < 0.01 * sseThreshold
+		if input('SSE已经足够小, 是否结束训练? [Y/N]:', 's') == 'y'
+			break;
+		else
+			figure(f); % 恢复绘图为活动窗口
+		end
+	end
+	
+	% SSE差分值检查: 检查sse是否下降, 不下降可能发散或过冲; 或下降很小, 可以结束
+	if sse_log(iter) > sse_log(iter-1)
+		convFailCount = convFailCount + 1;
+		if convFailCount > convWarningThreshold
+			convFailCount = 0;
+			k = k/2;
+			warning('k halved');
+		end
+	elseif sse_log(iter-1) - sse_log(iter) < 0.002 * sseThreshold
+		break;
+		if input('SSE变化量已经足够小, 是否结束训练? [Y/N]:', 's') == 'y'
+			break;
+		else
+			figure(f); % 恢复绘图为活动窗口
+		end
+	end
+	
+end
+
+fprintf('\n学习结束, 历经%d轮, 残差%.4f\n', iter, sse_log(iter));
+figure(f);
+
+##### SOURCE END #####
+-->
+</body>
+
+</html>

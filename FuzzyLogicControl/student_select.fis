@@ -1,0 +1,39 @@
+[System]
+Name='student_select'
+Type='mamdani'
+Version=2.0
+NumInputs=2
+NumOutputs=1
+NumRules=3
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='Mathmaticas'
+Range=[0 100]
+NumMFs=2
+MF1='bad':'trapmf',[0 0 60 80]
+MF2='good':'trapmf',[60 80 100 100]
+
+[Input2]
+Name='Height'
+Range=[0 10]
+NumMFs=2
+MF1='regular':'trimf',[0 1 5]
+MF2='higher':'trapmf',[1 5 10 10]
+
+[Output1]
+Name='Pass'
+Range=[0 100]
+NumMFs=3
+MF1='lower':'trimf',[0 30 50]
+MF2='regular':'trimf',[30 50 80]
+MF3='higher':'trimf',[50 80 100]
+
+[Rules]
+2 2, 3 (1) : 1
+1 2, 1 (1) : 1
+0 1, 2 (1) : 1

@@ -1,0 +1,133 @@
+<!-- 一个很好的示例: http://mandel.gart.nz/ -->
+<!-- Javascript 绘制速度相当快 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js" integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg==" crossorigin="anonymous"></script>
+    <style type="text/css">
+    body {
+        color: #D8DEE9;
+        background: #343D46;
+        font-family: 'Yahei Consolas Hybird', 'Consolas', serif;
+    }
+
+    canvas {
+        border: #0A0 solid 1px
+    }
+
+    @media (max-width: 480px) {
+        p {
+            color: #99C794;
+        }
+    }
+
+    @media (min-width: 480px) {
+        p {
+            color: #D8DEE9;
+        }
+    }
+    </style>
+    <title>Fractal</title>
+</head>
+
+<body>
+    <div class="pallete">
+        <canvas id="canvas0" width="240" height="180">画布</canvas>
+        <canvas id="canvas1" width="240" height="180">画布</canvas>
+    </div>
+    <div>
+        <button onclick="drawnow()">绘制</button>
+    </div>
+    <div class="footnote">
+        <p> 原本想找个简单的 C / C++ 的图形库; 或是简单的学 OpenGL 二维绘图. 但 Javascript 和 HTML 简直太香了. </p>
+    </div>
+</body>
+<script type="text/javascript">
+const timeStart = dayjs();
+let canvas0 = document.getElementById('canvas0');
+let canvas1 = document.getElementById('canvas1');
+
+if (!canvas0.getContext) { throw "Canvas nsupported"; }
+console.log('Canvas OK, 打 5 把 CS:GO');
+let context0 = canvas0.getContext('2d');
+let context1 = canvas1.getContext('2d');
+
+let width = canvas0.width;
+let height = canvas0.height;
+
+context0.fillStyle = '#D8DEE9';
+context1.fillStyle = '#D8DEE9';
+
+zRealL = -2;
+zRealU = -zRealL;
+zImagL = -1;
+zImagU = -zImagL;
+
+cReal = -.82;
+cImag = .2;
+
+const timeFinal = dayjs();
+console.log(timeStart.format('YYYY-MM-DD HH:mm:ss:SSS'));
+// console.log(timeFinal.format('YYYY-MM-DD HH:mm:ss:SSS'));
+// duration = timeFinal.diff(timeStart, 'ms');
+// console.log('Time for computation:', duration);
+
+function drawnow() {
+    for (var i = 0; i < width; i++) {
+        for (var j = 0; j < height; j++) {
+            zReal = i / width * (zRealU - zRealL) + zRealL;
+            zImag = j / height * (zImagU - zImagL) + zImagL;
+            if (isJulia(zReal, zImag, cReal, cImag)) { context0.fillRect(i, j, 1, 1); }
+            if (isMandelbrot(zReal, zImag)) { context1.fillRect(i, j, 1, 1); }
+        }
+    }
+}
+
+function isJulia(zX, zY, cX, cY) {
+    var preIter = 10;
+    var maxIter = 20;
+    var r2th = 10;
+
+    zX_ = zX;
+    zY_ = zY;
+
+    for (var i = 0; i < preIter; i++) {
+        zX_ = zX ** 2 - zY ** 2 + cX;
+        zY_ = 2 * zX * zY + cY;
+    }
+
+    for (var i = 0; i < maxIter; i++) {
+        zX_ = zX ** 2 - zY ** 2 + cX;
+        zY_ = 2 * zX * zY + cY;
+        zX = zX_;
+        zY = zY_;
+        if (zX ** 2 + zY ** 2 > r2th) {
+            return false;
+        }
+    }
+
+    return (zX ** 2 + zY ** 2 > r2th) ? false : true;
+
+}
+
+function isMandelbrot(cX, cY) {
+    var maxIter = 40;
+    var r2th = 9;
+
+    zX = cX;
+    zY = cY;
+
+    for (var i = 0; i < maxIter; i++) {
+        zX = zX ** 2 - zY ** 2 + cX;
+        zY = 2 * zX * zY + cY;
+        if (zX ** 2 + zY ** 2 > r2th) { break; }
+    }
+    return (zX ** 2 + zY ** 2 > r2th) ? false : true;
+
+}
+</script>
+
+</html>

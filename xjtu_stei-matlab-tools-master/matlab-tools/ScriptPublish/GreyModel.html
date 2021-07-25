@@ -1,0 +1,683 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+    <title>GreyModel</title>
+    <meta name="generator" content="MATLAB 9.8">
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+    <meta name="DC.date" content="2021-02-04">
+    <meta name="DC.source" content="GreyModel.m">
+    <style type="text/css">
+    html,
+    body,
+    div,
+    span,
+    applet,
+    object,
+    iframe,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    blockquote,
+    pre,
+    a,
+    abbr,
+    acronym,
+    address,
+    big,
+    cite,
+    code,
+    del,
+    dfn,
+    em,
+    font,
+    img,
+    ins,
+    kbd,
+    q,
+    s,
+    samp,
+    small,
+    strike,
+    strong,
+    sub,
+    sup,
+    tt,
+    var,
+    b,
+    u,
+    i,
+    center,
+    dl,
+    dt,
+    dd,
+    ol,
+    ul,
+    li,
+    fieldset,
+    form,
+    label,
+    legend,
+    table,
+    caption,
+    tbody,
+    tfoot,
+    thead,
+    tr,
+    th,
+    td {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        font-size: 100%;
+        vertical-align: baseline;
+        background: transparent
+    }
+
+    body {
+        line-height: 1
+    }
+
+    ol,
+    ul {
+        list-style: none
+    }
+
+    blockquote,
+    q {
+        quotes: none
+    }
+
+    blockquote:before,
+    blockquote:after,
+    q:before,
+    q:after {
+        content: '';
+        content: none
+    }
+
+    :focus {
+        outine: 0
+    }
+
+    ins {
+        text-decoration: none
+    }
+
+    del {
+        text-decoration: line-through
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0
+    }
+
+    html {
+        min-height: 100%;
+        margin-bottom: 1px;
+    }
+
+    html body {
+        height: 100%;
+        margin: 0px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 10px;
+        color: #000;
+        line-height: 140%;
+        background: #fff none;
+        overflow-y: scroll;
+    }
+
+    html body td {
+        vertical-align: top;
+        text-align: left;
+    }
+
+    h1 {
+        padding: 0px;
+        margin: 0px 0px 25px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.5em;
+        color: #d55000;
+        line-height: 100%;
+        font-weight: normal;
+    }
+
+    h2 {
+        padding: 0px;
+        margin: 0px 0px 8px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.2em;
+        color: #000;
+        font-weight: bold;
+        line-height: 140%;
+        border-bottom: 1px solid #d6d4d4;
+        display: block;
+    }
+
+    h3 {
+        padding: 0px;
+        margin: 0px 0px 5px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.1em;
+        color: #000;
+        font-weight: bold;
+        line-height: 140%;
+    }
+
+    a {
+        color: #005fce;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #005fce;
+        text-decoration: underline;
+    }
+
+    a:visited {
+        color: #004aa0;
+        text-decoration: none;
+    }
+
+    p {
+        padding: 0px;
+        margin: 0px 0px 20px;
+    }
+
+    img {
+        padding: 0px;
+        margin: 0px 0px 20px;
+        border: none;
+    }
+
+    p img,
+    pre img,
+    tt img,
+    li img,
+    h1 img,
+    h2 img {
+        margin-bottom: 0px;
+    }
+
+    ul {
+        padding: 0px;
+        margin: 0px 0px 20px 23px;
+        list-style: square;
+    }
+
+    ul li {
+        padding: 0px;
+        margin: 0px 0px 7px 0px;
+    }
+
+    ul li ul {
+        padding: 5px 0px 0px;
+        margin: 0px 0px 7px 23px;
+    }
+
+    ul li ol li {
+        list-style: decimal;
+    }
+
+    ol {
+        padding: 0px;
+        margin: 0px 0px 20px 0px;
+        list-style: decimal;
+    }
+
+    ol li {
+        padding: 0px;
+        margin: 0px 0px 7px 23px;
+        list-style-type: decimal;
+    }
+
+    ol li ol {
+        padding: 5px 0px 0px;
+        margin: 0px 0px 7px 0px;
+    }
+
+    ol li ol li {
+        list-style-type: lower-alpha;
+    }
+
+    ol li ul {
+        padding-top: 7px;
+    }
+
+    ol li ul li {
+        list-style: square;
+    }
+
+    .content {
+        font-size: 1.2em;
+        line-height: 140%;
+        padding: 20px;
+    }
+
+    pre,
+    code {
+        font-size: 12px;
+    }
+
+    tt {
+        font-size: 1.2em;
+    }
+
+    pre {
+        margin: 0px 0px 20px;
+        font-family: Consolas;
+    }
+
+    pre.codeinput {
+        padding: 10px;
+        border: 1px solid #d3d3d3;
+        background: #f7f7f7;
+    }
+
+    pre.codeoutput {
+        padding: 10px 11px;
+        margin: 0px 0px 20px;
+        color: #4c4c4c;
+    }
+
+    pre.error {
+        color: red;
+    }
+
+    @media print {
+
+        pre.codeinput,
+        pre.codeoutput {
+            word-wrap: break-word;
+            width: 100%;
+        }
+    }
+
+    span.keyword {
+        color: #0000FF
+    }
+
+    span.comment {
+        color: #228B22
+    }
+
+    span.string {
+        color: #A020F0
+    }
+
+    span.untermstring {
+        color: #B20000
+    }
+
+    span.syscmd {
+        color: #B28C00
+    }
+
+    span.typesection {
+        color: #A0522D
+    }
+
+    .footer {
+        width: auto;
+        padding: 10px 0px;
+        margin: 25px 0px 0px;
+        border-top: 1px dotted #878787;
+        font-size: 0.8em;
+        line-height: 140%;
+        font-style: italic;
+        color: #878787;
+        text-align: left;
+        float: none;
+    }
+
+    .footer p {
+        margin: 0px;
+    }
+
+    .footer a {
+        color: #878787;
+    }
+
+    .footer a:hover {
+        color: #878787;
+        text-decoration: underline;
+    }
+
+    .footer a:visited {
+        color: #878787;
+    }
+
+    table th {
+        padding: 7px 5px;
+        text-align: left;
+        vertical-align: middle;
+        border: 1px solid #d6d4d4;
+        font-weight: bold;
+    }
+
+    table td {
+        padding: 7px 5px;
+        text-align: left;
+        vertical-align: top;
+        border: 1px solid #d6d4d4;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <h2>Contents</h2>
+        <div>
+            <ul>
+                <li><a href="#1">Grey Model step by step</a></li>
+                <li><a href="#2">&#26679;&#26412;&#36755;&#20837;</a></li>
+                <li><a href="#3">&#32423;&#27604;&#26816;&#39564;, &#24182;&#23545;&#19981;&#36890;&#36807;&#32773;&#20570;&#35797;&#25506;&#24615;&#20559;&#32622;</a></li>
+                <li><a href="#4">&#31995;&#25968;&#35745;&#31639;</a></li>
+                <li><a href="#5">&#39044;&#27979;, &#36890;&#36807;&#19968;&#38454;&#24046;&#20998;</a></li>
+                <li><a href="#6">&#27531;&#24046;&#26816;&#39564;</a></li>
+                <li><a href="#7">&#26497;&#27604;&#20559;&#24046;&#26816;&#39564;</a></li>
+                <li><a href="#8">&#21462;&#28040;&#20559;&#32622;</a></li>
+                <li><a href="#9">&#39044;&#27979;&#32467;&#26524;&#22270;&#31034;</a></li>
+            </ul>
+        </div>
+        <h2 id="1">Grey Model step by step</h2>
+        <pre>Script by adqeor @XJTU
+&#20351;&#29992;GM(1,1)&#27169;&#22411;, &#36827;&#34892;&#26102;&#38388;&#24207;&#21015;&#39044;&#27979;
+&#36755;&#20837;&#31561;&#38388;&#38548;&#37319;&#26679;&#30340; x_0
+&#23545;&#25351;&#25968;&#22411;&#25968;&#25454;&#26356;&#26377;&#25928;</pre>
+        <pre>History:
+[rev0.1.2] 2 Feb. 2020:
+&#26356;&#25913;&#20102;&#35797;&#25506;&#20559;&#32622;&#31561;&#22788;&#30340;&#31243;&#24207;&#36923;&#36753;;
+&#26356;&#25913;&#20102;&#32472;&#22270;;
+&#22686;&#21152;&#20102;&#27979;&#35797;&#25968;&#25454;;
+&#20462;&#22797;&#20102;&#20559;&#32622;bug;
+&#23558;&#37096;&#20998;error&#21464;&#20026;warning, &#21363;&#20351;&#26816;&#39564;&#22833;&#36133;&#20063;&#36827;&#34892;&#32472;&#22270;(&#37096;&#20998;&#38656;&#35201;error&#36339;&#20986;&#34892;&#20026;&#30340;&#38500;&#22806;);
+&#23558;&#32423;&#27604;&#26816;&#39564;&#25277;&#35937;&#20026;&#26412;&#22320;&#20989;&#25968;;
+[rev0.1.1] 15 Sept. 2020:
+Last known archive.
+updated in Sept. 1, 2020, error()
+forecaste using GM(1,1), Jul. 7, 2020</pre>
+        <pre class="codeinput">clc;
+close <span class="string">all</span>;
+fprintf(<span class="string">'GM(1,1)&#27169;&#22411;&#39044;&#27979;\n'</span>);
+</pre>
+        <pre class="codeoutput">GM(1,1)&#27169;&#22411;&#39044;&#27979;
+</pre>
+        <h2 id="2">&#26679;&#26412;&#36755;&#20837;</h2>
+        <pre class="codeinput"><span class="comment">% &#31616;&#21333;&#25351;&#25968;&#22686;&#38271;, &#24102;&#22122;&#22768;</span>
+t = 2.5:.4:5;
+x_0 = 2*exp(.5*t) + 4*randn(size(t));
+
+<span class="comment">% % &#20004;&#20010;&#25351;&#25968;&#22686;&#38271;, &#24102;&#22122;&#22768;</span>
+<span class="comment">% t = 3:.3:5;</span>
+<span class="comment">% x_0 = 2*exp(.5*t) + 1*exp(.2*t) + 4*randn(size(t)) + 7;</span>
+
+<span class="comment">% % &#32447;&#24615;</span>
+<span class="comment">% t = 0:.1:2;</span>
+<span class="comment">% x_0 = 2*t + 18 + 1*randn(size(t));</span>
+
+n_sampleCount = length(x_0);
+n_succPredict = 8;      <span class="comment">% &#24076;&#26395;&#21521;&#21518;&#39044;&#27979;&#30340;&#20195;&#25968;</span>
+alpha = .8;             <span class="comment">% &#29983;&#25104;&#31995;&#25968; &#36890;&#24120;&#19981;&#23567;&#20110;0.5, &#21363;&#26368;&#36817;&#30340;&#25968;&#25454;&#26356;&#20855;&#21442;&#32771;&#20215;&#20540;</span>
+
+<span class="keyword">if</span> n_sampleCount &lt; 4
+    error(<span class="string">'&#39044;&#27979;&#38656;&#35201;&#33267;&#23569;4&#20010;&#26679;&#26412;, &#24403;&#21069;&#20165;&#26377;%d&#20010;\n'</span>, n_sampleCount);
+<span class="keyword">elseif</span> min(x_0) &lt; 0
+    error(<span class="string">'&#26679;&#26412;&#20540;&#24212;&#38750;&#36127;, &#21487;&#32771;&#34385;&#25163;&#21160;&#22686;&#21152;&#20559;&#32622;'</span>);
+<span class="keyword">end</span>
+</pre>
+        <h2 id="3">&#32423;&#27604;&#26816;&#39564;, &#24182;&#23545;&#19981;&#36890;&#36807;&#32773;&#20570;&#35797;&#25506;&#24615;&#20559;&#32622;</h2>
+        <pre class="codeinput">bias = 0;
+biasFlag = false;
+biasTrialCount = 0;
+biasTrialMax = 200;
+
+<span class="keyword">while</span> ~ratioTrial(x_0 + bias, n_sampleCount)
+
+    biasFlag = true;
+    biasTrialCount = biasTrialCount + 1;
+
+    <span class="keyword">if</span> biasTrialCount &gt; biasTrialMax
+        error(<span class="string">'&#32423;&#27604;&#26816;&#39564;&#22833;&#36133;, %d&#27425;&#23581;&#35797;&#20173;&#26410;&#25214;&#21040;&#21512;&#36866;&#30340;&#20559;&#32622;'</span>, biasTrialMax)
+    <span class="keyword">end</span>
+
+    bias = mean(x_0) * (1+ randn());
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> biasFlag
+    x_0 = x_0 + bias;
+    fprintf(<span class="string">'%d&#27425;&#23581;&#35797;&#21518;&#25214;&#21040;&#20559;&#32622; %.2f &#28385;&#36275;&#32423;&#27604;&#26816;&#39564;.\n'</span>, biasTrialCount, bias);
+    disp(<span class="string">'&#21153;&#24517;&#26816;&#39564;&#32467;&#26524;, &#36991;&#20813;&#21160;&#24577;&#33539;&#22260;&#20002;&#22833;'</span>);
+    fprintf(<span class="string">'&#21442;&#32771;: &#24046;&#27169;&#21160;&#24577;&#33539;&#22260;%f, &#21407;&#22987;&#20849;&#27169;&#24133;&#24230;%f\n\n'</span>,max(x_0)-min(x_0),mean(x_0));
+<span class="keyword">end</span>
+</pre>
+        <pre class="codeoutput">6&#27425;&#23581;&#35797;&#21518;&#25214;&#21040;&#20559;&#32622; 32.82 &#28385;&#36275;&#32423;&#27604;&#26816;&#39564;.
+&#21153;&#24517;&#26816;&#39564;&#32467;&#26524;, &#36991;&#20813;&#21160;&#24577;&#33539;&#22260;&#20002;&#22833;
+&#21442;&#32771;: &#24046;&#27169;&#21160;&#24577;&#33539;&#22260;23.858425, &#21407;&#22987;&#20849;&#27169;&#24133;&#24230;47.785956
+
+</pre>
+        <h2 id="4">&#31995;&#25968;&#35745;&#31639;</h2>
+        <pre class="codeinput"><span class="comment">% AGO&#31639;&#23376;&#20316;&#29992; AGO = Accumulating Generation Operation, &#31561;&#20215;&#20110;&#25968;&#20540;&#31215;&#20998;</span>
+x_1 = cumsum(x_0);
+<span class="comment">% &#28369;&#31383;&#22343;&#20540;&#20302;&#36890;&#28388;&#27874;</span>
+<span class="comment">% z_1 = alpha*x_1 + (1-alpha)*[0,x_1(1:end-1)];</span>
+z_1 = x_1;
+
+Y = x_0';
+B = [-z_1',ones(n_sampleCount,1)];
+coeff = B\Y;
+a = coeff(1); b = coeff(2);
+</pre>
+        <h2 id="5">&#39044;&#27979;, &#36890;&#36807;&#19968;&#38454;&#24046;&#20998;</h2>
+        <pre class="codeinput">x_hat_1 = (x_0(1)-b/a) * exp( -a*(1:n_succPredict+n_sampleCount) ) + b/a;
+<span class="comment">% IAGO&#31639;&#31526;&#31561;&#20215;&#20110;&#25968;&#20540;&#24046;&#20998;, &#36827;&#34892;&#38646;&#38454;&#39044;&#27979;&#20540;&#24674;&#22797;, &#24182;&#23545;&#39318;&#20010;&#25968;&#25454;&#36824;&#21407;</span>
+x_hat_0 = diff([0,x_hat_1]);
+x_hat_0(1) = x_0(1);
+</pre>
+        <h2 id="6">&#27531;&#24046;&#26816;&#39564;</h2>
+        <pre class="codeinput">residual = max( abs(1-x_hat_0(1:n_sampleCount)./x_0) );
+fprintf(<span class="string">'&#27531;&#24046;&#26497;&#22823;&#20026; %.3f, '</span>,residual);
+<span class="keyword">if</span> residual &lt; .1
+    fprintf(<span class="string">'&#36798;&#21040;&#36739;&#39640;&#35201;&#27714;.\n'</span>);
+<span class="keyword">elseif</span> residual &lt; .2
+    fprintf(<span class="string">'&#36798;&#21040;&#19968;&#33324;&#35201;&#27714;.\n'</span>);
+<span class="keyword">else</span>
+    warning(<span class="string">'&#26410;&#33021;&#36798;&#21040;&#35201;&#27714;.'</span>);
+<span class="keyword">end</span>
+</pre>
+        <pre class="codeoutput">&#27531;&#24046;&#26497;&#22823;&#20026; 0.113, &#36798;&#21040;&#19968;&#33324;&#35201;&#27714;.
+</pre>
+        <h2 id="7">&#26497;&#27604;&#20559;&#24046;&#26816;&#39564;</h2>
+        <pre class="codeinput">ratio = x_0(1:end-1) ./ x_0(2:end);
+ratioDeviation = max( ratio .* abs(1-(1-.5*a)/(1+.5*a)) );
+fprintf(<span class="string">'&#32423;&#27604;&#20559;&#24046;&#26497;&#22823;&#20026; %.3f, '</span>,ratioDeviation);
+<span class="keyword">if</span> ratioDeviation &lt; .1
+    disp(<span class="string">'&#36798;&#21040;&#36739;&#39640;&#35201;&#27714;.'</span>);
+<span class="keyword">elseif</span> ratioDeviation &lt; .2
+    disp(<span class="string">'&#36798;&#21040;&#19968;&#33324;&#35201;&#27714;.'</span>);
+<span class="keyword">else</span>
+    warning(<span class="string">'&#26410;&#33021;&#36798;&#21040;&#35201;&#27714;.'</span>);
+<span class="keyword">end</span>
+</pre>
+        <pre class="codeoutput">&#32423;&#27604;&#20559;&#24046;&#26497;&#22823;&#20026; 0.087, &#36798;&#21040;&#36739;&#39640;&#35201;&#27714;.
+</pre>
+        <h2 id="8">&#21462;&#28040;&#20559;&#32622;</h2>
+        <pre class="codeinput"><span class="keyword">if</span> biasFlag
+    x_0 = x_0 - bias;
+    x_hat_0 = x_hat_0 - bias;
+<span class="keyword">end</span>
+</pre>
+        <h2 id="9">&#39044;&#27979;&#32467;&#26524;&#22270;&#31034;</h2>
+        <pre class="codeinput">figure(<span class="string">'Name'</span>,<span class="string">'&#20351;&#29992; GM(1,1) &#27169;&#22411;&#30340;&#39044;&#27979;'</span>);
+hold <span class="string">on</span>;
+plot(x_0,<span class="string">'-.O'</span>, <span class="string">'LineWidth'</span>,1.5);
+plot(x_hat_0, <span class="string">'*'</span>, <span class="string">'MarkerSize'</span>,8);
+xlabel(<span class="string">'&#20195;&#25968;'</span>, <span class="string">'FontSize'</span>,13); <span class="comment">% 'FontWeight','bold'</span>
+ylabel(<span class="string">'&#27979;&#20540;'</span>, <span class="string">'FontSize'</span>,13);
+legend({<span class="string">'Observed'</span>,<span class="string">'Predicted'</span>}, <span class="string">'FontSize'</span>,12, <span class="string">'Location'</span>,<span class="string">'best'</span>);
+title(<span class="string">'&#28784;&#33394;&#39044;&#27979; GM(1,1)'</span>);
+hold <span class="string">off</span>;
+
+<span class="keyword">function</span> status = ratioTrial(x, n)
+    ratio = x(1:end-1) ./ x(2:end);
+    status = max(ratio) &lt; exp(2/(n+1)) &amp;&amp; min(ratio) &gt; exp(-2/(n+1));
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="GreyModel_01.png" alt="">
+        <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p>
+    </div>
+    <!--
+##### SOURCE BEGIN #####
+%% Grey Model step by step
+%  Script by adqeor @XJTU
+%  使用GM(1,1)模型, 进行时间序列预测
+%  输入等间隔采样的 x_0
+%  对指数型数据更有效
+%  
+%  History:
+%  [rev0.1.2] 2 Feb. 2020:
+%  更改了试探偏置等处的程序逻辑;
+%  更改了绘图;
+%  增加了测试数据;
+%  修复了偏置bug;
+%  将部分error变为warning, 即使检验失败也进行绘图(部分需要error跳出行为的除外);
+%  将级比检验抽象为本地函数;
+%  [rev0.1.1] 15 Sept. 2020:
+%  Last known archive.
+%  updated in Sept. 1, 2020, error()
+%  forecaste using GM(1,1), Jul. 7, 2020
+
+clc;
+close all;
+fprintf('GM(1,1)模型预测\n');
+
+%% 样本输入
+
+% 简单指数增长, 带噪声
+t = 2.5:.4:5;
+x_0 = 2*exp(.5*t) + 4*randn(size(t));
+
+% % 两个指数增长, 带噪声
+% t = 3:.3:5;
+% x_0 = 2*exp(.5*t) + 1*exp(.2*t) + 4*randn(size(t)) + 7;
+
+% % 线性
+% t = 0:.1:2;
+% x_0 = 2*t + 18 + 1*randn(size(t));
+
+n_sampleCount = length(x_0);
+n_succPredict = 8;      % 希望向后预测的代数
+alpha = .8;             % 生成系数 通常不小于0.5, 即最近的数据更具参考价值
+
+if n_sampleCount < 4
+    error('预测需要至少4个样本, 当前仅有%d个\n', n_sampleCount);
+elseif min(x_0) < 0
+    error('样本值应非负, 可考虑手动增加偏置');
+end
+
+%% 级比检验, 并对不通过者做试探性偏置
+bias = 0;
+biasFlag = false;
+biasTrialCount = 0;
+biasTrialMax = 200;
+
+while ~ratioTrial(x_0 + bias, n_sampleCount)
+
+    biasFlag = true;
+    biasTrialCount = biasTrialCount + 1;
+
+    if biasTrialCount > biasTrialMax
+        error('级比检验失败, %d次尝试仍未找到合适的偏置', biasTrialMax)
+    end
+    
+    bias = mean(x_0) * (1+ randn());
+end
+
+if biasFlag
+    x_0 = x_0 + bias;
+    fprintf('%d次尝试后找到偏置 %.2f 满足级比检验.\n', biasTrialCount, bias);
+    disp('务必检验结果, 避免动态范围丢失');
+    fprintf('参考: 差模动态范围%f, 原始共模幅度%f\n\n',max(x_0)-min(x_0),mean(x_0));
+end     
+
+%% 系数计算
+
+% AGO算子作用 AGO = Accumulating Generation Operation, 等价于数值积分
+x_1 = cumsum(x_0);
+% 滑窗均值低通滤波
+% z_1 = alpha*x_1 + (1-alpha)*[0,x_1(1:end-1)];
+z_1 = x_1;
+
+Y = x_0';
+B = [-z_1',ones(n_sampleCount,1)];
+coeff = B\Y;
+a = coeff(1); b = coeff(2);
+
+%% 预测, 通过一阶差分
+x_hat_1 = (x_0(1)-b/a) * exp( -a*(1:n_succPredict+n_sampleCount) ) + b/a;
+% IAGO算符等价于数值差分, 进行零阶预测值恢复, 并对首个数据还原
+x_hat_0 = diff([0,x_hat_1]);
+x_hat_0(1) = x_0(1);
+
+%% 残差检验
+residual = max( abs(1-x_hat_0(1:n_sampleCount)./x_0) );
+fprintf('残差极大为 %.3f, ',residual);
+if residual < .1
+    fprintf('达到较高要求.\n');
+elseif residual < .2
+    fprintf('达到一般要求.\n');
+else
+    warning('未能达到要求.');
+end
+
+%% 极比偏差检验
+ratio = x_0(1:end-1) ./ x_0(2:end);
+ratioDeviation = max( ratio .* abs(1-(1-.5*a)/(1+.5*a)) );
+fprintf('级比偏差极大为 %.3f, ',ratioDeviation);
+if ratioDeviation < .1
+    disp('达到较高要求.');
+elseif ratioDeviation < .2
+    disp('达到一般要求.');
+else
+    warning('未能达到要求.');
+end
+
+%% 取消偏置
+if biasFlag
+    x_0 = x_0 - bias;
+    x_hat_0 = x_hat_0 - bias;
+end
+
+%% 预测结果图示
+figure('Name','使用 GM(1,1) 模型的预测');
+hold on;
+plot(x_0,'-.O', 'LineWidth',1.5);
+plot(x_hat_0, '*', 'MarkerSize',8);
+xlabel('代数', 'FontSize',13); % 'FontWeight','bold'
+ylabel('测值', 'FontSize',13);
+legend({'Observed','Predicted'}, 'FontSize',12, 'Location','best');
+title('灰色预测 GM(1,1)');
+hold off;
+
+function status = ratioTrial(x, n)
+    ratio = x(1:end-1) ./ x(2:end);
+    status = max(ratio) < exp(2/(n+1)) && min(ratio) > exp(-2/(n+1));
+end
+
+##### SOURCE END #####
+-->
+</body>
+
+</html>

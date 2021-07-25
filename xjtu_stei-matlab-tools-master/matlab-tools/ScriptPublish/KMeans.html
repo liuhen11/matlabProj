@@ -1,0 +1,580 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+    <title>KMeans.m</title>
+    <meta name="generator" content="MATLAB 9.8">
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+    <meta name="DC.date" content="2021-02-04">
+    <meta name="DC.source" content="KMeans.m">
+    <style type="text/css">
+    html,
+    body,
+    div,
+    span,
+    applet,
+    object,
+    iframe,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    blockquote,
+    pre,
+    a,
+    abbr,
+    acronym,
+    address,
+    big,
+    cite,
+    code,
+    del,
+    dfn,
+    em,
+    font,
+    img,
+    ins,
+    kbd,
+    q,
+    s,
+    samp,
+    small,
+    strike,
+    strong,
+    sub,
+    sup,
+    tt,
+    var,
+    b,
+    u,
+    i,
+    center,
+    dl,
+    dt,
+    dd,
+    ol,
+    ul,
+    li,
+    fieldset,
+    form,
+    label,
+    legend,
+    table,
+    caption,
+    tbody,
+    tfoot,
+    thead,
+    tr,
+    th,
+    td {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        font-size: 100%;
+        vertical-align: baseline;
+        background: transparent
+    }
+
+    body {
+        line-height: 1
+    }
+
+    ol,
+    ul {
+        list-style: none
+    }
+
+    blockquote,
+    q {
+        quotes: none
+    }
+
+    blockquote:before,
+    blockquote:after,
+    q:before,
+    q:after {
+        content: '';
+        content: none
+    }
+
+    :focus {
+        outine: 0
+    }
+
+    ins {
+        text-decoration: none
+    }
+
+    del {
+        text-decoration: line-through
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0
+    }
+
+    html {
+        min-height: 100%;
+        margin-bottom: 1px;
+    }
+
+    html body {
+        height: 100%;
+        margin: 0px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 10px;
+        color: #000;
+        line-height: 140%;
+        background: #fff none;
+        overflow-y: scroll;
+    }
+
+    html body td {
+        vertical-align: top;
+        text-align: left;
+    }
+
+    h1 {
+        padding: 0px;
+        margin: 0px 0px 25px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.5em;
+        color: #d55000;
+        line-height: 100%;
+        font-weight: normal;
+    }
+
+    h2 {
+        padding: 0px;
+        margin: 0px 0px 8px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.2em;
+        color: #000;
+        font-weight: bold;
+        line-height: 140%;
+        border-bottom: 1px solid #d6d4d4;
+        display: block;
+    }
+
+    h3 {
+        padding: 0px;
+        margin: 0px 0px 5px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.1em;
+        color: #000;
+        font-weight: bold;
+        line-height: 140%;
+    }
+
+    a {
+        color: #005fce;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #005fce;
+        text-decoration: underline;
+    }
+
+    a:visited {
+        color: #004aa0;
+        text-decoration: none;
+    }
+
+    p {
+        padding: 0px;
+        margin: 0px 0px 20px;
+    }
+
+    img {
+        padding: 0px;
+        margin: 0px 0px 20px;
+        border: none;
+    }
+
+    p img,
+    pre img,
+    tt img,
+    li img,
+    h1 img,
+    h2 img {
+        margin-bottom: 0px;
+    }
+
+    ul {
+        padding: 0px;
+        margin: 0px 0px 20px 23px;
+        list-style: square;
+    }
+
+    ul li {
+        padding: 0px;
+        margin: 0px 0px 7px 0px;
+    }
+
+    ul li ul {
+        padding: 5px 0px 0px;
+        margin: 0px 0px 7px 23px;
+    }
+
+    ul li ol li {
+        list-style: decimal;
+    }
+
+    ol {
+        padding: 0px;
+        margin: 0px 0px 20px 0px;
+        list-style: decimal;
+    }
+
+    ol li {
+        padding: 0px;
+        margin: 0px 0px 7px 23px;
+        list-style-type: decimal;
+    }
+
+    ol li ol {
+        padding: 5px 0px 0px;
+        margin: 0px 0px 7px 0px;
+    }
+
+    ol li ol li {
+        list-style-type: lower-alpha;
+    }
+
+    ol li ul {
+        padding-top: 7px;
+    }
+
+    ol li ul li {
+        list-style: square;
+    }
+
+    .content {
+        font-size: 1.2em;
+        line-height: 140%;
+        padding: 20px;
+    }
+
+    pre,
+    code {
+        font-size: 12px;
+    }
+
+    tt {
+        font-size: 1.2em;
+    }
+
+    pre {
+        margin: 0px 0px 20px;
+        font-family: Consolas;
+    }
+
+    pre.codeinput {
+        padding: 10px;
+        border: 1px solid #d3d3d3;
+        background: #f7f7f7;
+    }
+
+    pre.codeoutput {
+        padding: 10px 11px;
+        margin: 0px 0px 20px;
+        color: #4c4c4c;
+    }
+
+    pre.error {
+        color: red;
+    }
+
+    @media print {
+
+        pre.codeinput,
+        pre.codeoutput {
+            word-wrap: break-word;
+            width: 100%;
+        }
+    }
+
+    span.keyword {
+        color: #0000FF
+    }
+
+    span.comment {
+        color: #228B22
+    }
+
+    span.string {
+        color: #A020F0
+    }
+
+    span.untermstring {
+        color: #B20000
+    }
+
+    span.syscmd {
+        color: #B28C00
+    }
+
+    span.typesection {
+        color: #A0522D
+    }
+
+    .footer {
+        width: auto;
+        padding: 10px 0px;
+        margin: 25px 0px 0px;
+        border-top: 1px dotted #878787;
+        font-size: 0.8em;
+        line-height: 140%;
+        font-style: italic;
+        color: #878787;
+        text-align: left;
+        float: none;
+    }
+
+    .footer p {
+        margin: 0px;
+    }
+
+    .footer a {
+        color: #878787;
+    }
+
+    .footer a:hover {
+        color: #878787;
+        text-decoration: underline;
+    }
+
+    .footer a:visited {
+        color: #878787;
+    }
+
+    table th {
+        padding: 7px 5px;
+        text-align: left;
+        vertical-align: middle;
+        border: 1px solid #d6d4d4;
+        font-weight: bold;
+    }
+
+    table td {
+        padding: 7px 5px;
+        text-align: left;
+        vertical-align: top;
+        border: 1px solid #d6d4d4;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <h1>KMeans.m</h1>
+        <!--introduction-->
+        <pre>Script by adqeor @XJTU
+MATLAB&#20869;&#24314; kmeans &#32858;&#31867;&#20989;&#25968;&#30340;demo. &#29983;&#25104;&#25968;&#25454;&#38598;, &#32858;&#31867;&#21518;&#21487;&#35270;&#21270;.
+&#21487;&#35270;&#21270;&#26041;&#27861;&#21442;&#32771;&#20102; kmeans &#20989;&#25968;&#30340;&#25991;&#26723;</pre>
+        <pre>History:
+[rev0.1.2] 1 Feb. 2021:
+&#37325;&#20889;&#20102;&#37096;&#20998;&#32472;&#22270;&#20195;&#30721;, &#22686;&#24378;&#38754;&#21521;&#23545;&#35937;&#33539;&#24335;, &#20197;&#20989;&#25968;&#24335;&#26367;&#20195;&#37096;&#20998;&#25351;&#20196;&#20195;&#30721;;
+&#24341;&#20986;&#32472;&#22270;&#21477;&#26564;, &#20415;&#20110;&#32472;&#22270;&#23646;&#24615;&#20462;&#25913;;
+&#22270;&#24418;&#32472;&#21046;&#25351;&#20196;&#21464;&#26356;&#20026;&#26174;&#31034;&#20256;&#36882;&#21477;&#26564;;
+[rev0.1.1] 1 Feb. 2021:
+&#37325;&#24314;&#20102;&#25991;&#26723;;
+&#24314;&#31435;&#29256;&#26412;&#31995;&#32479;, &#22791;&#20221;;
+[rev0.1.0] 5 Sept. 2020:
+&#21442;&#29031;MATLAB Documentation&#30340;&#20363;&#23376;, &#23454;&#29616;&#20102;k-means&#32858;&#31867;&#21644;&#20004;&#31181;&#21487;&#35270;&#21270;;</pre>
+        <!--/introduction-->
+        <h2>Contents</h2>
+        <div>
+            <ul>
+                <li><a href="#1">&#27979;&#35797;&#25968;&#25454;&#29983;&#25104;</a></li>
+                <li><a href="#2">&#20351;&#29992;MATLAB&#20869;&#24314;&#20989;&#25968;&#36827;&#34892;k&#32858;&#31867;</a></li>
+                <li><a href="#3">&#32467;&#26524;&#21487;&#35270;&#21270;&#65306;&#21306;&#22495;&#22635;&#20805;</a></li>
+                <li><a href="#4">&#32467;&#26524;&#21487;&#35270;&#21270;&#65306;&#28857;&#30528;&#33394;+&#20013;&#24515;&#26174;&#31034;</a></li>
+            </ul>
+        </div>
+        <h2 id="1">&#27979;&#35797;&#25968;&#25454;&#29983;&#25104;</h2>
+        <pre>&#25191;&#34892;&#21069;&#20934;&#22791;</pre>
+        <pre class="codeinput">clc;
+fprintf(<span class="string">'&#20351;&#29992;MATLAB&#20869;&#24314;&#20989;&#25968;&#30340;k-means&#32858;&#31867;\n&#27979;&#35797;&#25968;&#25454;&#21457;&#29983;\n'</span>);
+
+N_points = 40; <span class="comment">% &#25351;&#23450;&#27599;&#31751;&#29983;&#25104;&#30340;&#33539;&#20363;&#25968;&#25454;&#20010;&#25968;</span>
+
+rng(9); <span class="comment">% &#20197;&#22266;&#23450;&#20540;&#21021;&#22987;&#21270;&#38543;&#26426;&#25968;&#21457;&#29983;&#22120;, &#22312;&#24179;&#38754;&#29983;&#25104;&#33509;&#24178;&#20010;&#28857;, &#20415;&#20110;&#22797;&#29616;</span>
+
+DAT = [randn(N_points,2)*2+ones(N_points,2); <span class="comment">% &#31751;1</span>
+	randn(N_points,2)*0.5-ones(N_points,2); <span class="comment">% &#31751;2</span>
+	randn(N_points,2)*0.6+3*ones(N_points,2)]; <span class="comment">% &#31751;3</span>
+
+f0 = figure(<span class="string">'Name'</span>,<span class="string">'&#32858;&#31867;&#33539;&#20363;&#25968;&#25454;'</span>);
+ax0 = axes(f0);
+p0 = plot(ax0, DAT(:,1),DAT(:,2),<span class="string">'*'</span>,<span class="string">'MarkerSize'</span>,5.2);
+title(ax0, <span class="string">'&#20108;&#32500;&#28857;&#20998;&#24067;'</span>);
+</pre>
+        <pre class="codeoutput">&#20351;&#29992;MATLAB&#20869;&#24314;&#20989;&#25968;&#30340;k-means&#32858;&#31867;
+&#27979;&#35797;&#25968;&#25454;&#21457;&#29983;
+</pre><img vspace="5" hspace="5" src="KMeans_01.png" alt="">
+        <h2 id="2">&#20351;&#29992;MATLAB&#20869;&#24314;&#20989;&#25968;&#36827;&#34892;k&#32858;&#31867;</h2>
+        <pre>&#25968;&#25454;&#26684;&#24335;&#65306;&#36755;&#20837; num x dim &#30340;&#30697;&#38453; DAT,
+&#20854;&#20013; num &#20026;&#24453;&#20998;&#31867;&#28857;&#25968;, dim &#20026;&#25968;&#25454;&#32500;&#24230;
+&#32473;&#23450;&#32858;&#31867;&#24120;&#25968;k</pre>
+        <pre class="codeinput">k = 3;
+[idx,K_Cent] = kmeans(DAT,k);
+</pre>
+        <h2 id="3">&#32467;&#26524;&#21487;&#35270;&#21270;&#65306;&#21306;&#22495;&#22635;&#20805;</h2>
+        <pre class="codeinput"><span class="comment">% &#29983;&#25104;&#25968;&#25454;&#28857;&#21306;&#22495;&#30340;&#32454;&#33268;&#32593;&#26684;</span>
+sep = .06; <span class="comment">% &#32593;&#26684;&#31890;&#24230;</span>
+x1 = min(DAT(:,1)):sep:max(DAT(:,1));
+x2 = min(DAT(:,2)):sep:max(DAT(:,2));
+[x1G,x2G] = meshgrid(x1,x2);
+XGrid = [x1G(:),x2G(:)];
+
+<span class="comment">% &#21033;&#29992;&#23545;&#32593;&#26684;&#19968;&#36718;&#36845;&#20195;&#30340;&#32858;&#31867;, &#36827;&#34892;&#30528;&#33394;</span>
+idx2Region = kmeans(XGrid,3,<span class="string">'MaxIter'</span>,1,<span class="string">'Start'</span>,K_Cent);
+
+f1 = figure(<span class="string">'name'</span>,<span class="string">'K-means &#32858;&#31867; &#21306;&#22495;&#22635;&#20805;&#21487;&#35270;&#21270;'</span>);
+ax1 = axes(f1);
+ax1.NextPlot = <span class="string">'add'</span>;
+
+gscatter(ax1, XGrid(:,1),XGrid(:,2),idx2Region,<span class="keyword">...</span>
+		[.1,.5,.5; .5,.1,.5; .5,.5,.1],<span class="string">'..'</span>);
+
+plot(ax1, DAT(:,1),DAT(:,2),<span class="string">'k*'</span>,<span class="string">'MarkerSize'</span>,6.8);
+<span class="comment">% &#25351;&#23450;&#32472;&#22270;&#33539;&#22260;. MATLAB&#33258;&#21160;&#30830;&#23450;&#20250;&#36896;&#25104;&#32472;&#22270;&#36793;&#32536;&#30333;&#36793;</span>
+xlim(ax1, [min(DAT(:,1))-sep,max(DAT(:,1))+sep]);
+ylim(ax1, [min(DAT(:,2))-sep,max(DAT(:,2))+sep]);
+legend(ax1, {<span class="string">'Region 1'</span>,<span class="string">'Region 2'</span>,<span class="string">'Region 3'</span>,<span class="string">'Data'</span>},<span class="string">'Location'</span>,<span class="string">'Northwest'</span>);
+</pre>
+        <pre class="codeoutput">&#35686;&#21578;: &#26410;&#33021;&#22312; 1 &#27425;&#36845;&#20195;&#21518;&#25910;&#25947;&#12290; 
+</pre><img vspace="5" hspace="5" src="KMeans_02.png" alt="">
+        <h2 id="4">&#32467;&#26524;&#21487;&#35270;&#21270;&#65306;&#28857;&#30528;&#33394;+&#20013;&#24515;&#26174;&#31034;</h2>
+        <pre class="codeinput">f2 = figure(<span class="string">'Name'</span>,<span class="string">'K-means &#32858;&#31867; &#28857;&#30528;&#33394;&#21487;&#35270;&#21270;'</span>);
+ax2 = axes(f2);
+ax2.NextPlot = <span class="string">'add'</span>;
+
+colormap(f2, lines(6)); <span class="comment">% &#23545;&#25968;&#25454;&#37327;&#36739;&#23569;&#12289;&#21306;&#20998;&#26126;&#26174;&#30340;, &#25351;&#23450;&#20302;&#39281;&#21644;&#24230;&#37197;&#33394;&#20197;&#20415;&#35266;&#23519;</span>
+<span class="comment">% colormap(f2, prism(6)); % &#23545;&#25968;&#25454;&#37327;&#22823;&#12289;&#21306;&#20998;&#19981;&#26126;&#26174;&#30340;, &#25351;&#23450;&#39640;&#39281;&#21644;&#24230;&#37197;&#33394;&#20197;&#20415;&#35266;&#23519;</span>
+cmap = colormap; <span class="comment">% &#25552;&#21462;colormap, &#25163;&#21160;&#23545;&#31751;&#30528;&#33394;</span>
+
+<span class="comment">% &#23545;&#22810;&#31181;&#25968;&#25454;, &#33258;&#21160;&#29983;&#25104;&#22270;&#20363;</span>
+legend_word = cell(1,k+1);
+<span class="keyword">for</span> i = 1:k
+	plot(ax2, DAT(idx == i, 1),DAT(idx == i, 2), <span class="string">'x'</span>, <span class="string">'MarkerSize'</span>,9, <span class="string">'Color'</span>,cmap(i,:));
+	legend_word{i} = [<span class="string">'Cluster'</span> num2str(i)]; <span class="comment">% &#31532;i&#31751;, &#29992;&#37197;&#33394;&#26041;&#26696;&#20013;&#31532;i&#31181;&#39068;&#33394;</span>
+<span class="keyword">end</span>
+legend_word{k+1} = <span class="string">'Centroids'</span>;
+
+plot(K_Cent(:,1),K_Cent(:,2), <span class="string">'k+'</span>, <span class="string">'MarkerSize'</span>,12, <span class="string">'LineWidth'</span>,3);
+
+legend(ax2, legend_word, <span class="string">'Location'</span>,<span class="string">'best'</span>);
+title(ax2, <span class="string">'&#32858;&#31867;&#32467;&#26524;&#19982;&#31751;&#20013;&#24515;'</span>);
+</pre><img vspace="5" hspace="5" src="KMeans_03.png" alt="">
+        <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p>
+    </div>
+    <!--
+##### SOURCE BEGIN #####
+%% KMeans.m
+%  Script by adqeor @XJTU
+%  MATLAB内建 kmeans 聚类函数的demo. 生成数据集, 聚类后可视化. 
+%  可视化方法参考了 kmeans 函数的文档
+%  
+%  History:
+%  [rev0.1.2] 1 Feb. 2021:
+%  重写了部分绘图代码, 增强面向对象范式, 以函数式替代部分指令代码;
+%  引出绘图句柄, 便于绘图属性修改;
+%  图形绘制指令变更为显示传递句柄;
+%  [rev0.1.1] 1 Feb. 2021:
+%  重建了文档;
+%  建立版本系统, 备份;
+%  [rev0.1.0] 5 Sept. 2020:
+%  参照MATLAB Documentation的例子, 实现了k-means聚类和两种可视化;
+
+%% 测试数据生成
+%  执行前准备
+clc;
+fprintf('使用MATLAB内建函数的k-means聚类\n测试数据发生\n');
+
+N_points = 40; % 指定每簇生成的范例数据个数
+
+rng(9); % 以固定值初始化随机数发生器, 在平面生成若干个点, 便于复现
+
+DAT = [randn(N_points,2)*2+ones(N_points,2); % 簇1
+	randn(N_points,2)*0.5-ones(N_points,2); % 簇2
+	randn(N_points,2)*0.6+3*ones(N_points,2)]; % 簇3
+
+f0 = figure('Name','聚类范例数据');
+ax0 = axes(f0);
+p0 = plot(ax0, DAT(:,1),DAT(:,2),'*','MarkerSize',5.2);
+title(ax0, '二维点分布');
+
+%% 使用MATLAB内建函数进行k聚类
+%  数据格式：输入 num x dim 的矩阵 DAT, 
+%  其中 num 为待分类点数, dim 为数据维度
+%  给定聚类常数k
+k = 3;
+[idx,K_Cent] = kmeans(DAT,k);
+
+%% 结果可视化：区域填充
+
+% 生成数据点区域的细致网格
+sep = .06; % 网格粒度
+x1 = min(DAT(:,1)):sep:max(DAT(:,1));
+x2 = min(DAT(:,2)):sep:max(DAT(:,2));
+[x1G,x2G] = meshgrid(x1,x2);
+XGrid = [x1G(:),x2G(:)]; 
+
+% 利用对网格一轮迭代的聚类, 进行着色
+idx2Region = kmeans(XGrid,3,'MaxIter',1,'Start',K_Cent);
+
+f1 = figure('name','K-means 聚类 区域填充可视化');
+ax1 = axes(f1);
+ax1.NextPlot = 'add';
+
+gscatter(ax1, XGrid(:,1),XGrid(:,2),idx2Region,...
+		[.1,.5,.5; .5,.1,.5; .5,.5,.1],'..');
+
+plot(ax1, DAT(:,1),DAT(:,2),'k*','MarkerSize',6.8);
+% 指定绘图范围. MATLAB自动确定会造成绘图边缘白边
+xlim(ax1, [min(DAT(:,1))-sep,max(DAT(:,1))+sep]);
+ylim(ax1, [min(DAT(:,2))-sep,max(DAT(:,2))+sep]);
+legend(ax1, {'Region 1','Region 2','Region 3','Data'},'Location','Northwest');
+
+%% 结果可视化：点着色+中心显示
+
+f2 = figure('Name','K-means 聚类 点着色可视化');
+ax2 = axes(f2);
+ax2.NextPlot = 'add';
+
+colormap(f2, lines(6)); % 对数据量较少、区分明显的, 指定低饱和度配色以便观察
+% colormap(f2, prism(6)); % 对数据量大、区分不明显的, 指定高饱和度配色以便观察
+cmap = colormap; % 提取colormap, 手动对簇着色
+
+% 对多种数据, 自动生成图例
+legend_word = cell(1,k+1);
+for i = 1:k
+	plot(ax2, DAT(idx == i, 1),DAT(idx == i, 2), 'x', 'MarkerSize',9, 'Color',cmap(i,:));
+	legend_word{i} = ['Cluster' num2str(i)]; % 第i簇, 用配色方案中第i种颜色
+end
+legend_word{k+1} = 'Centroids';
+
+plot(K_Cent(:,1),K_Cent(:,2), 'k+', 'MarkerSize',12, 'LineWidth',3);
+
+legend(ax2, legend_word, 'Location','best');
+title(ax2, '聚类结果与簇中心');
+
+##### SOURCE END #####
+-->
+</body>
+
+</html>

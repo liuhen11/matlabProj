@@ -1,0 +1,493 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>&#25670;&#38047;&#27169;&#25311;</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-02-06"><meta name="DC.source" content="PendulumSim.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>&#25670;&#38047;&#27169;&#25311;</h1><!--introduction--><pre>Script by adqeor@XJTU
+&#29702;&#35770;&#21147;&#23398;&#35838;&#31243;&#30340;&#31532;&#20108;&#27425;&#22823;&#20316;&#19994;, &#25506;&#31350;&#29289;&#29702;&#25670;&#30340;&#21608;&#26399;&#35832;&#20803;&#30340;&#20851;&#31995;.
+&#24433;&#21709;&#22240;&#32032;&#21253;&#25324;&#28201;&#24230;(&#25670;&#38271;), &#37325;&#21147;&#25200;&#21160;, &#38459;&#23612;.</pre><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">&#27169;&#22411;&#20171;&#32461;</a></li><li><a href="#2">History:</a></li><li><a href="#3">&#23450;&#20041;&#26041;&#31243;</a></li><li><a href="#4">&#19968;&#20123;&#27979;&#35797;&#20363;&#21644;&#21487;&#35270;&#21270;</a></li><li><a href="#5">&#20005;&#26684;&#27714;&#35299;&#30340;&#21333;&#25670;</a></li><li><a href="#6">&#23567;&#35282;&#36817;&#20284;&#30340;&#21333;&#25670;</a></li><li><a href="#7">&#26377;&#24120;&#20540;&#25200;&#21160;&#30340;&#21018;&#20307;&#25670;</a></li><li><a href="#8">&#21333;&#25670;, &#23567;&#35282;&#36817;&#20284;&#30340;&#21333;&#25670;, &#21018;&#20307;&#25670;&#30340;&#23545;&#27604;</a></li><li><a href="#9">&#20351;&#29992; pspectrum &#23545;&#27604;&#20998;&#26512;</a></li><li><a href="#10">&#35282;&#24230;&#22270;&#31034;</a></li><li><a href="#11">Deprecated</a></li></ul></div><h2 id="1">&#27169;&#22411;&#20171;&#32461;</h2><pre>&#21333;&#25670;&#26159;&#20855;&#26377; 1 &#33258;&#30001;&#24230;&#30340;&#31995;&#32479;, &#25670;&#35282; theta &#20026;&#29366;&#24577;&#21442;&#25968;. &#37325;&#21147;&#21152;&#36895;&#24230; g &#22312;&#32440;&#38754;&#20869;&#21521;&#19979;&#25351;;
+&#20197;&#25670;&#33258;&#28982;&#24748;&#22402;&#20301;&#32622;&#20026; 0 &#24230;, &#32440;&#38754;&#20869;&#20570;&#27491;&#34746;&#26059;&#30340;&#35282;&#36895;&#24230;&#22402;&#30452;&#21521;&#22806;;
+&#25200;&#21160;&#20027;&#30690; x &#20998;&#37327;&#27700;&#24179;&#21521;&#21491;, y &#20998;&#37327;&#22402;&#30452;&#21521;&#19978;, &#25200;&#21160;&#20027;&#30697;&#20351;&#25670;&#35282;&#36895;&#24230;&#22686;&#22823;.</pre><pre>&#25670;&#30340;&#36136;&#37327;&#20026; m, &#36136;&#24515;&#21040;&#36716;&#36724;&#30340;&#36317;&#31163;&#20026; L, &#36136;&#24515;&#23545;&#36716;&#36724;&#20855;&#26377;&#36716;&#21160;&#24815;&#37327; J.
+&#38459;&#23612;&#31995;&#25968;&#20026; rho, &#38459;&#23612;&#21147; f_Damp = - rho * theta' &#20316;&#29992;&#20110;&#36136;&#24515;.</pre><pre>[phyPend]&#36136;&#37327;&#38598;&#20013;&#20998;&#24067;&#30340;&#29289;&#29702;&#21333;&#25670;, &#28385;&#36275;&#24494;&#20998;&#26041;&#31243;: theta'' + g/L * sin(theta) = 0</pre><p><img src="PendulumSim_eq15214864359006205714.png" alt="$$\frac{d^2 \theta}{dt^2}+\frac{g}{L}\cdot sin(\theta)=0$$" style="width:130px;height:33px;"></p><pre>[phyMiniPend]&#36136;&#37327;&#38598;&#20013;&#20998;&#24067;&#30340;&#24494;&#23567;&#25670;&#24133;&#29289;&#29702;&#21333;&#25670;, &#28385;&#36275;&#24494;&#20998;&#26041;&#31243;: theta'' + g/L * theta = 0</pre><p><img src="PendulumSim_eq17461785594606971195.png" alt="$$\frac{d^2 \theta}{dt^2}+\frac{g}{L}\cdot \theta=0$$" style="width:98px;height:33px;"></p><pre>[rigidPend]&#21018;&#20307;&#21333;&#25670;, &#28385;&#36275;&#24494;&#20998;&#26041;&#31243;: theta'' + mgL/J * sin(theta) 0</pre><p><img src="PendulumSim_eq13308124049579460161.png" alt="$$\frac{d^2 \theta}{dt^2}+\frac{mgL}{J}\cdot sin(\theta)=0$$" style="width:151px;height:33px;"></p><pre>[rigidDampPend]&#31354;&#27668;&#38459;&#23612;&#21018;&#20307;&#21333;&#25670;, &#22312;&#19978;&#36848;&#24494;&#20998;&#26041;&#31243;&#24038;&#20391;&#22686;&#21152;&#38459;&#23612;&#39033; rho/J * theta': theta'' + mgL/J * sin(theta) + rho/J * theta' = 0</pre><p><img src="PendulumSim_eq15469723566555100108.png" alt="$$\frac{d^2 \theta}{dt^2}+\frac{mgL}{J}\cdot sin(\theta)+\frac{\rho}{J}\cdot\frac{d \theta}{dt}=0$$" style="width:211px;height:33px;"></p><pre>[rigidDampTurbPend]&#21463;&#38543;&#25200;&#21160;&#30340;&#31354;&#27668;&#38459;&#23612;&#21018;&#20307;&#21333;&#25670;, &#22312;&#19978;&#36848;&#24494;&#20998;&#26041;&#31243;&#24038;&#20391;&#32487;&#32493;&#22686;&#21152;&#38543;&#26426;&#25200;&#21160;&#39033; - L/J*(Fx * cos(theta)+Fy*sin(theta)) - M/J</pre><p><img src="PendulumSim_eq09830437485623930468.png" alt="$$\frac{d^2 \theta}{dt^2}+\frac{mgL}{J}\cdot sin(\theta)+\frac{\rho}{J}\cdot\frac{d \theta}{d t}-\frac{L}{J} \cdot(F_x\cdot cos(\theta)+F_y\cdot sin(\theta))-\frac{M}{J}= 0$$" style="width:451px;height:33px;"></p><pre>&#20854;&#20013; F_x, F_y &#20026;&#25200;&#21160;&#30340;&#20027;&#30690;, M &#20026;&#25200;&#21160;&#30340;&#20027;&#30697;. &#25200;&#21160;&#30340;&#24133;&#20540;&#35889;&#23494;&#24230;&#32473;&#23450;.</pre><h2 id="2">History:</h2><pre>[rev0.1.0] 6 Feb. 2021:
+&#37325;&#24314;&#39033;&#30446;. &#23454;&#29616; phyPend, phyMiniPend, rigidPend, rigidDampPend; rigidDampTurbPend
+&#27169;&#22411;&#26242;&#26102;&#27809;&#26377;&#21160;&#24577;&#25200;&#21160;;
+&#24314;&#31435;&#25991;&#26723;;
+&#21457;&#24067;;
+28 Oct. 2020:
+Create file.</pre><h2 id="3">&#23450;&#20041;&#26041;&#31243;</h2><pre>MATLAB ode &#27714;&#35299;&#22120;&#25509;&#25910;&#30340;&#26041;&#31243; f &#28385;&#36275; y' = f(t, y)
+&#20294;&#25670;&#30340;&#24494;&#20998;&#26041;&#31243;&#24418;&#22914; y'' = f(t, y, y'), &#20026;&#20108;&#38454;&#24494;&#20998;&#26041;&#31243;.</pre><pre>&#20351;&#29992;&#25442;&#20803;&#25216;&#24039;:
+&#35760; x1 = y, x2 = y'; X = [x1; x2] = [y; y'],
+&#26377; [X]' = [y; y']' = [y'; y''] = [y'; f(t, x1, x2)] = [x2; f(t, x1, x2)]
+&#32780;&#24335;&#23376; [X]' = [x2; f(t, x1, x2)] &#21487;&#20197;&#34920;&#31034;&#20026; X' = F(T, X), &#23454;&#29616;&#20102;&#38477;&#35299;</pre><pre>&#20351;&#29992;&#24418;&#22914; f_modelName &#30340;(&#21311;&#21517;)&#20989;&#25968;&#21477;&#26564;&#34920;&#31034;&#21508;&#20010;&#27169;&#22411;&#20013;&#38500;theta'' &#30340;&#39033;, &#21363;
+theta'' = f_modelName(t, theta, theta'). &#36825;&#26679;&#21487;&#20197;&#38543;&#26102;&#35775;&#38382; g &#31561;&#21442;&#25968;&#30340;&#23454;&#26102;&#20540;,
+&#32780;&#26080;&#38656;&#23545;&#21442;&#37327; global &#22768;&#26126;, &#25110;&#26159;&#23450;&#20041;&#26412;&#22320;&#20989;&#25968;&#23436;&#25104;&#21442;&#25968;&#20256;&#36882;. &#36825;&#26159;&#22240;&#20026;&#21442;&#25968;&#20197;&#24341;&#29992;
+&#24418;&#24335;&#20195;&#20837;&#20989;&#25968;&#21477;&#26564;.
+&#27880;&#24847;&#20989;&#25968;&#21442;&#25968;&#20013; y &#30340;&#24494;&#20998;&#38454;&#27425;&#39034;&#27425;&#21319;&#39640;, &#22240;&#32780;&#36865;&#20837; ode &#27714;&#35299;&#22120;&#30340;&#20989;&#25968;&#24418;&#22914;
+modelName = @(t, X) [X(2); f_modelName(t, X(1), X(2))];</pre><pre>&#30001;&#20110;&#25670;&#21487;&#33021;&#22260;&#32469;&#25903;&#28857;&#21457;&#29983;&#32763;&#28378;, &#35299;&#20986;&#30340; y &#19981;&#33021;&#30452;&#25509;&#29992;&#20110;&#20316;&#22270;
+&#25552;&#38382;: &#33021;&#21542;&#22312;&#26041;&#31243;&#20013;&#23545; y &#36827;&#34892;&#21028;&#23450;, &#21457;&#29616;&#36229;&#20986; +-pi &#33539;&#22260;, &#21017;&#36827;&#34892;&#30456;&#24212;&#30340;&#21152;&#20943;&#21602;?
+&#22238;&#31572;: &#19981;&#34892;. trim &#36807;&#31243;&#20250;&#36896;&#25104;&#35813;&#28857;&#30340;&#24494;&#20998;(&#25968;&#20540;&#24046;&#20998;)&#24456;&#22823;, &#23548;&#33268;&#38169;&#35823;&#30340;&#35299;.
+&#35299;&#20915;&#26041;&#26696;:
+- &#23545; L * sin(y) &#20316;&#22270;, &#21033;&#29992;&#27491;&#20313;&#24358;&#30340;&#26377;&#30028;&#24615;(&#19979;&#31216;'&#19977;&#35282;&#38480;&#24133;&#27861;');
+- &#25110;&#23545; y' &#20316;&#22270;, &#21482;&#35201;&#31995;&#32479;&#26426;&#26800;&#33021;&#19981;&#21457;&#25955;(&#19979;&#31216;'&#35282;&#36895;&#24230;&#38480;&#24133;&#27861;').</pre><pre class="codeinput">clc;
+close <span class="string">all</span>;
+
+<span class="comment">% &#29289;&#29702;&#27169;&#22411;&#21442;&#25968;</span>
+g = 9.8;
+L = 1;
+m = 5;
+J = m * L * L;
+rho = 5;
+Fx = m*g;
+Fy = m*g;
+M = 0;
+
+<span class="comment">% &#20223;&#30495;&#26102;&#38388;&#23610;&#24230;&#21442;&#25968;</span>
+tInit = 0;
+tFinal = 5;
+
+<span class="comment">% &#29289;&#29702;&#27169;&#22411;&#21021;&#20540;</span>
+y0 = pi/3;
+dydt0 = -.1;
+
+<span class="comment">% f_modelName		= @(t, y, dydt) &#36825;&#20123;&#39033;&#22312;&#24494;&#20998;&#26041;&#31243;&#20013;&#24658;&#31561;&#20110; d2ydt2</span>
+f_phyPend			= @(~, y, ~)	-g/L * sin(y);
+f_phyMiniPend		= @(~, y, ~)	-g/L * y;
+f_rigidPend			= @(~, y, ~)	-m*g*L/J * sin(y);
+f_rigidDampPend		= @(~, y, dydt)	-m*g*L/J * sin(y) - rho/J * dydt;
+f_rigidDampTurbPend = @(~, y, dydt) -m*g*L/J * sin(y) - rho/J * dydt + M/J + L/J * (Fx*cos(y)+Fy*(sin(y)));
+
+<span class="comment">% modelName			= @(t, X) [X(2); f_modelName(t, X(1), X(2))];</span>
+phyPend				= @(t, X) [X(2); f_phyPend(t, X(1), X(2))];
+phyMiniPend			= @(t, X) [X(2); f_phyMiniPend(t, X(1), X(2))];
+rigidPend			= @(t, X) [X(2); f_rigidPend(t, X(1), X(2))];
+rigidDampPend		= @(t, X) [X(2); f_rigidDampPend(t, X(1), X(2))];
+rigidDampTurbPend	= @(t, X) [X(2); f_rigidDampTurbPend(t, X(1), X(2))];
+</pre><h2 id="4">&#19968;&#20123;&#27979;&#35797;&#20363;&#21644;&#21487;&#35270;&#21270;</h2><pre>&#38750;&#21018;&#24615;&#38382;&#39064;, MATLAB &#20869;&#24314;&#20102; ode23, ode45, ode113 &#19977;&#31181;&#27714;&#35299;&#22120;.
+MATLAB &#24110;&#21161;&#39029;:
+&#23545;&#20110;&#22823;&#22810;&#25968;&#38750;&#21018;&#24615;&#38382;&#39064;&#65292;ode45 &#30340;&#24615;&#33021;&#26368;&#20339;&#12290;
+&#20294;&#23545;&#20110;&#20801;&#35768;&#36739;&#23485;&#26494;&#30340;&#35823;&#24046;&#23481;&#38480;&#25110;&#21018;&#24230;&#36866;&#20013;&#30340;&#38382;&#39064;&#65292;&#24314;&#35758;&#20351;&#29992; ode23&#12290;
+&#21516;&#26679;&#65292;&#23545;&#20110;&#20855;&#26377;&#20005;&#26684;&#35823;&#24046;&#23481;&#38480;&#30340;&#38382;&#39064;&#65292;ode113 &#21487;&#33021;&#27604; ode45 &#26356;&#21152;&#39640;&#25928;&#12290;</pre><h2 id="5">&#20005;&#26684;&#27714;&#35299;&#30340;&#21333;&#25670;</h2><pre>&#26410;&#25351;&#23450;&#36755;&#20986;&#21442;&#25968;&#20250;&#33258;&#34892;&#32472;&#22270;</pre><pre class="codeinput">fprintf(<span class="string">'\theta_0 = %.3f, \theta_0'' = %.3f\n'</span>, y0, dydt0);
+ode45(rigidPend, [tInit, tFinal], [y0, dydt0]);
+</pre><h2 id="6">&#23567;&#35282;&#36817;&#20284;&#30340;&#21333;&#25670;</h2><pre class="codeinput">fprintf(<span class="string">'\theta_0 = %.3f, \theta_0'' = %.3f\n'</span>, y0, dydt0);
+[t, y] = ode45(phyMiniPend, [tInit, tFinal], [y0, dydt0]);
+figure;
+plot(t, y);
+legend({<span class="string">'\theta'</span>,<span class="string">'d\theta/dt'</span>});
+</pre><h2 id="7">&#26377;&#24120;&#20540;&#25200;&#21160;&#30340;&#21018;&#20307;&#25670;</h2><pre>&#20351;&#29992;&#20004;&#31181;&#26041;&#27861;&#36991;&#20813;&#25670;&#35282;&#25968;&#20540;&#25104;&#21608;&#26399;&#36305;&#39134;
+&#20351;&#29992;&#20102;&#26032;&#30340; legend &#22270;&#20363;&#25351;&#23450;&#26041;&#27861;</pre><pre class="codeinput">[t, y] = ode45(rigidDampTurbPend, [tInit, tFinal], [y0, dydt0]);
+figure;
+hold <span class="string">on</span>;
+plot(t, L * sin(y(:,1)), <span class="string">'DisplayName'</span>,<span class="string">'&#27700;&#24179;&#20301;&#32622;&#25237;&#24433; - &#19977;&#35282;&#38480;&#24133;&#27861;'</span>);
+plot(t, y(:,2), <span class="string">'DisplayName'</span>,<span class="string">'&#35282;&#36895;&#24230; - &#35282;&#36895;&#24230;&#38480;&#24133;&#27861;'</span>);
+hold <span class="string">off</span>;
+legend;
+</pre><h2 id="8">&#21333;&#25670;, &#23567;&#35282;&#36817;&#20284;&#30340;&#21333;&#25670;, &#21018;&#20307;&#25670;&#30340;&#23545;&#27604;</h2><pre>&#22312;&#21516;&#19968;&#22352;&#26631;&#19979;&#21472;&#21152;&#32472;&#21046;&#35282;&#36895;&#24230;</pre><pre class="codeinput">figure; colormap(lines); hold <span class="string">on</span>;
+[t, y1] = ode45(phyPend, [tInit, tFinal], [y0, dydt0]);
+plot(t, y1(:,2), <span class="string">'LineStyle'</span>,<span class="string">'--'</span>);
+[t, y2] = ode45(phyMiniPend, [tInit, tFinal], [y0, dydt0]);
+plot(t, y2(:,2));
+[t, y3] = ode45(rigidPend, [tInit, tFinal], [y0, dydt0]);
+plot(t, y3(:,2), <span class="string">'LineStyle'</span>,<span class="string">'-.'</span>);
+</pre><h2 id="9">&#20351;&#29992; pspectrum &#23545;&#27604;&#20998;&#26512;</h2><pre>&#19978;&#36848;&#19977;&#31181;&#24773;&#20917;, &#35282;&#36895;&#24230;&#21644;&#35282;&#21152;&#36895;&#24230;&#30340;&#21151;&#29575;&#35889;</pre><pre class="codeinput">figure(1); [t, y1] = ode45(phyPend, [tInit, tFinal], [y0, dydt0]); pspectrum(y1, t, <span class="string">'power'</span>);
+figure(2); [t, y2] = ode45(phyMiniPend, [tInit, tFinal], [y0, dydt0]); pspectrum(y2, t, <span class="string">'power'</span>);
+figure(3); [t, y3] = ode45(rigidPend, [tInit, tFinal], [y0, dydt0]); pspectrum(y3, t, <span class="string">'power'</span>);
+</pre><h2 id="10">&#35282;&#24230;&#22270;&#31034;</h2><pre>&#26356;&#21451;&#22909;&#30340;&#23637;&#31034;&#25670;&#30340;&#20301;&#32622;</pre><pre class="codeinput">[t, y] = ode45(rigidDampTurbPend, [tInit, tFinal], [y0, dydt0]);
+pendulumPlot(t, y);
+
+<span class="keyword">function</span> pendulumPlot(t, y)
+	dt = diff(t);
+	figure(<span class="string">'NumberTitle'</span>,<span class="string">'off'</span>, <span class="string">'MenuBar'</span>,<span class="string">'none'</span>, <span class="string">'ToolBar'</span>,<span class="string">'none'</span>);
+	p = polarplot(y(1), <span class="string">'o'</span>);
+	<span class="keyword">for</span> i = 1:length(dt)
+		pause(dt(i));
+		p.ThetaData = y(i+1);
+		drawnow <span class="string">limitrate</span>;
+	<span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">	heta_0 = 1.047, 	heta_0' = -0.100
+	heta_0 = 1.047, 	heta_0' = -0.100
+</pre><img vspace="5" hspace="5" src="PendulumSim_01.png" alt=""> <img vspace="5" hspace="5" src="PendulumSim_02.png" alt=""> <img vspace="5" hspace="5" src="PendulumSim_03.png" alt=""> <img vspace="5" hspace="5" src="PendulumSim_04.png" alt=""> <img vspace="5" hspace="5" src="PendulumSim_05.png" alt=""> <h2 id="11">Deprecated</h2><p>simulation timestep</p><p>t = 0; dt = 1e-1; tmax = 150;</p><p>m = 10; g = 9.8; l = 1;</p><p>theta0 = pi/3; % initial angular position in radians d_theta0 = 0; % initial angular velocity in rad per sec</p><p>nTHD = 4;</p><p>clc; close all;</p><p>tic;</p><p>Fs = 1/dt; iter = 1; iter_max = tmax/dt + 1;</p><p>f = figure(1); f.Units = 'normalized'; f.Position = [0 0 .8 .3]; f.ToolBar = 'none'; f.MenuBar = 'none'; f.Name = '&#26102;&#22495;'; f.NumberTitle = 'off';</p><p>ax = axes(f, 'Units','normalized', 'Position',[.05,.15,.92,.8], 'NextPlot','add'); xlabel(ax, '\bf Time'); ylabel(ax, '\bf\theta');</p><p>cmap = colormap('lines'); % cmap = colormap('prism');</p><p>%h1 = animatedline('Color',cmap(1,:), 'LineWidth',2); 	theta1 = theta0; d_theta1 = d_theta0; %h2 = animatedline('Color',cmap(2,:), 'LineWidth',1); 	theta2 = theta0; d_theta2 = d_theta0; %h3 = animatedline('Color',cmap(3,:), 'LineWidth',1.4); 	theta3 = theta0; d_theta3 = d_theta0;</p><p>T = t:dt:tmax; Y1 = zeros(iter_max, 1); Y2 = zeros(iter_max, 1); Y3 = zeros(iter_max, 1);</p><p>rng(0); % delta_g = .9*g.*randn(iter_max, 1);  delta_g = .2*g.*sin(2*pi*0.5*T);</p><p>while iter &lt;= iter_max</p><p>%	addpoints(h1, t,theta1); %	addpoints(h2, t,theta2); %	addpoints(h3, t,theta3);</p><p>% 	plot(t,theta1, 'Color',cmap(1,:)); % 	plot(t,theta2, 'Color',cmap(2,:)); % 	plot(t,theta3, 'Color',cmap(3,:));</p><p>% T(iter) = t; &#36825;&#31181;&#39044;&#20998;&#37197;&#30340;&#20889;&#27861;&#36866;&#29992;&#20110;&#22266;&#23450;&#26102;&#38388;&#27493;&#36827;&#65292;&#20415;&#20110;&#35745;&#31639;FFT&#12289;&#20316;&#22270;&#65292;&#20063;&#36991;&#20813;&#24490;&#29615;&#36807;&#31243;&#20013;&#26356;&#25913;&#25968;&#25454;&#32500;&#24230;&#12290;&#20294;&#23384;&#22312;&#25928;&#29575;&#38382;&#39064; 	Y1(iter) = theta1; 	Y2(iter) = theta2; 	Y3(iter) = theta3;</p><p>theta1 = theta1 + dt * d_theta1; 	theta2 = theta2 + dt * d_theta2; 	theta3 = theta3 + dt * d_theta3;</p><p>if theta3 &gt;= pi 		theta3 = theta3 - 2*pi; 	elseif theta3 &lt; -pi 		theta3 = theta3 + 2*pi; 	end</p><p>d_theta1 = d_theta1 - dt * (g/l)*theta1; 	d_theta2 = d_theta2 - dt * (g/l)*sin(theta2); 	d_theta3 = d_theta3 - dt * ((g + delta_g(iter))/l)*sin(theta2);</p><p>t = t + dt; 	iter = iter + 1;</p><p>end</p><p>plot(ax, T,Y1); plot(ax, T,Y2); %plot(ax, T,Y3); legend(ax, {'&#23567;&#35282;&#36817;&#20284;','&#29289;&#29702;&#25670;','&#30828;&#35299;&#21152;&#25200;&#21160;'}, 'FontSize',16);</p><p>% fft_Y1 = fft_Y1(1:iter_max/2+1); &#22914;iter_max&#19981;&#26159;&#20598;&#25968;&#23558;&#24341;&#21457;&#35686;&#21578;&#65292;&#20294;&#19981;&#26159;&#38169;&#35823; % &#20882;&#21495;&#34920;&#36798;&#24335;&#20197;1&#27493;&#36827;&#65292;&#24517;&#23450;&#21462;&#25972;&#12290;&#21487;&#20197;&#25233;&#21046;&#35686;&#21578;&#36755;&#20986;&#65292;&#20063;&#21487;&#25163;&#21160;&#19979;&#21462;&#25972;&#25968;</p><p>fft_Y1 = abs(fft(Y1)/iter_max); fft_Y1 = fft_Y1(1:floor(iter_max/2+1)); fft_Y1(2:end-1) = 2*fft_Y1(2:end-1); fft_Y2 = abs(fft(Y2)/iter_max); fft_Y2 = fft_Y2(1:floor(iter_max/2+1)); fft_Y2(2:end-1) = 2*fft_Y2(2:end-1); fft_Y3 = abs(fft(Y3)/iter_max); fft_Y3 = fft_Y3(1:floor(iter_max/2+1)); fft_Y3(2:end-1) = 2*fft_Y3(2:end-1);</p><p>fft_ng = abs(fft(delta_g)/iter_max); fft_ng = fft_ng(1:floor(iter_max/2+1)); fft_ng(2:end-1) = 2*fft_ng(2:end-1); fft_ng = fft_ng/g;% &#25200;&#21160;&#37327;&#21487;&#20197;&#29992;&#27604;&#20363;&#34913;&#37327;&#65292;&#38656;&#35201;&#24402;&#19968;&#21270;</p><p>fft_f = figure(2); fft_f.Units = 'normalized'; fft_f.ToolBar = 'figure'; fft_f.MenuBar = 'none'; fft_f.Name = '&#39057;&#22495;'; fft_f.NumberTitle = 'off';</p><p>fft_ax = axes(fft_f, 'Units','normalized', 'Position',[.09,.13,.9,.85],... 			'NextPlot','add', 'YLim',[1e-4, 2+my_max(fft_Y1,fft_Y2,fft_Y3,fft_ng)]); fft_ax.XScale = 'log'; fft_ax.YScale = 'log'; fft_ax.XGrid = 'on'; fft_ax.YGrid = 'on'; % hold on; &#31561;&#20215;&#20110; gca.NextPlot = 'add'; &#36991;&#20813;&#21518;&#38754;&#30340;plot&#23548;&#33268;&#21069;&#38754;&#30340;&#22270;&#20914;&#25481; % &#35774;&#32622;&#36724;&#30340;X/YScale&#20026;log&#21487;&#20197;&#25163;&#21160;&#23454;&#29616;loglog&#22270; % &#20063;&#21487;&#20197;&#20351;&#29992;mag2db, pow2db</p><p>xlabel(fft_ax, '\bf &#39057;&#29575; (Hz)'); ylabel(fft_ax, '\bf &#25391;&#24133; (m)');</p><p>plot(fft_ax, fft_Y1); plot(fft_ax, fft_Y2); %plot(fft_ax, fft_Y3); plot(fft_ax, fft_ng);</p><p>[M1, I1] = max(fft_Y1); text(fft_ax, I1+15,M1, sprintf('%.3f@%.1f',M1,I1)); plot(I1,M1,'o'); [M2, I2] = max(fft_Y2); text(fft_ax, I2-49,M2, sprintf('%.3f@%.1f',M2,I2)); plot(I2,M2,'d'); [M3, I3] = max(fft_ng); text(fft_ax, I3,M3, sprintf('%.2f@%.1f',M3,I3)); plot(I3,M3,'x');</p><p>text(fft_ax, 1,2, sprintf('',1.23)); % sprintf&#21487;&#20197;&#21521;title, legend, text, xylabel&#31561;&#25554;&#20837;C&#39118;&#26684;&#30340;&#26684;&#24335;&#21270;&#23383;&#31526;&#20018; % &#21333;&#32431;&#20351;&#29992;'string'&#25554;&#20837;&#21017;&#21487;&#20197;&#20351;&#29992;tex/latex&#39118;&#26684;&#30340;&#35821;&#27861;&#12290;&#21487;&#25351;&#23450;&#35299;&#37322;&#22120; % &#22823;&#27010;&#19981;&#21487;&#20860;&#24471;&#65311;</p><p>legend(fft_ax, {'&#23567;&#35282;&#36817;&#20284;','&#29289;&#29702;&#25670;','&#30828;&#35299;&#21152;&#25200;&#21160;','&#25200;&#21160;'}, 'FontSize',16, 'Location','best');</p><p>f = 1/(2*pi)*sqrt(g/l); % xlim([0, f*(nTHD+1)]);</p><p>toc; function max_val = my_max(varargin) 	temp_max = zeros(nargin, 1); 	for i = 1:nargin 		temp_max(i) = max(varargin{i}); 	end 	max_val = max(temp_max); end</p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% 摆钟模拟
+%  Script by adqeor@XJTU
+%  理论力学课程的第二次大作业, 探究物理摆的周期诸元的关系.
+%  影响因素包括温度(摆长), 重力扰动, 阻尼.
+%  
+%%% 模型介绍
+%  
+%  单摆是具有 1 自由度的系统, 摆角 theta 为状态参数. 重力加速度 g 在纸面内向下指; 
+%  以摆自然悬垂位置为 0 度, 纸面内做正螺旋的角速度垂直向外;
+%  扰动主矢 x 分量水平向右, y 分量垂直向上, 扰动主矩使摆角速度增大.
+%  
+%  摆的质量为 m, 质心到转轴的距离为 L, 质心对转轴具有转动惯量 J.
+%  阻尼系数为 rho, 阻尼力 f_Damp = - rho * theta' 作用于质心.
+%  
+%  [phyPend]质量集中分布的物理单摆, 满足微分方程: theta'' + g/L * sin(theta) = 0
+% 
+% $$\frac{d^2 \theta}{dt^2}+\frac{g}{L}\cdot sin(\theta)=0$$
+% 
+%  [phyMiniPend]质量集中分布的微小摆幅物理单摆, 满足微分方程: theta'' + g/L * theta = 0
+% 
+% $$\frac{d^2 \theta}{dt^2}+\frac{g}{L}\cdot \theta=0$$
+% 
+%  [rigidPend]刚体单摆, 满足微分方程: theta'' + mgL/J * sin(theta) 0
+% 
+% $$\frac{d^2 \theta}{dt^2}+\frac{mgL}{J}\cdot sin(\theta)=0$$
+% 
+%  [rigidDampPend]空气阻尼刚体单摆, 在上述微分方程左侧增加阻尼项 rho/J * theta': theta'' + mgL/J * sin(theta) + rho/J * theta' = 0
+% 
+% $$\frac{d^2 \theta}{dt^2}+\frac{mgL}{J}\cdot sin(\theta)+\frac{\rho}{J}\cdot\frac{d \theta}{dt}=0$$
+% 
+%  [rigidDampTurbPend]受随扰动的空气阻尼刚体单摆, 在上述微分方程左侧继续增加随机扰动项 - L/J*(Fx * cos(theta)+Fy*sin(theta)) - M/J
+% 
+% $$\frac{d^2 \theta}{dt^2}+\frac{mgL}{J}\cdot sin(\theta)+\frac{\rho}{J}\cdot\frac{d \theta}{d t}-\frac{L}{J} \cdot(F_x\cdot cos(\theta)+F_y\cdot sin(\theta))-\frac{M}{J}= 0$$
+% 
+%  其中 F_x, F_y 为扰动的主矢, M 为扰动的主矩. 扰动的幅值谱密度给定.
+%  
+%%%  History:
+%  [rev0.1.0] 6 Feb. 2021:
+%  重建项目. 实现 phyPend, phyMiniPend, rigidPend, rigidDampPend; rigidDampTurbPend
+%  模型暂时没有动态扰动;
+%  建立文档;
+%  发布;
+%  28 Oct. 2020:
+%  Create file.
+
+%% 定义方程
+%  MATLAB ode 求解器接收的方程 f 满足 y' = f(t, y)
+%  但摆的微分方程形如 y'' = f(t, y, y'), 为二阶微分方程.
+%  
+%  使用换元技巧: 
+%  记 x1 = y, x2 = y'; X = [x1; x2] = [y; y'],
+%  有 [X]' = [y; y']' = [y'; y''] = [y'; f(t, x1, x2)] = [x2; f(t, x1, x2)]
+%  而式子 [X]' = [x2; f(t, x1, x2)] 可以表示为 X' = F(T, X), 实现了降解
+%  
+%  使用形如 f_modelName 的(匿名)函数句柄表示各个模型中除theta'' 的项, 即
+%  theta'' = f_modelName(t, theta, theta'). 这样可以随时访问 g 等参数的实时值, 
+%  而无需对参量 global 声明, 或是定义本地函数完成参数传递. 这是因为参数以引用
+%  形式代入函数句柄.
+%  注意函数参数中 y 的微分阶次顺次升高, 因而送入 ode 求解器的函数形如
+%  modelName = @(t, X) [X(2); f_modelName(t, X(1), X(2))];
+%  
+%  由于摆可能围绕支点发生翻滚, 解出的 y 不能直接用于作图
+%  提问: 能否在方程中对 y 进行判定, 发现超出 +-pi 范围, 则进行相应的加减呢?
+%  回答: 不行. trim 过程会造成该点的微分(数值差分)很大, 导致错误的解.
+%  解决方案:
+%  - 对 L * sin(y) 作图, 利用正余弦的有界性(下称'三角限幅法');
+%  - 或对 y' 作图, 只要系统机械能不发散(下称'角速度限幅法').
+%  
+
+clc;
+close all;
+
+% 物理模型参数
+g = 9.8;
+L = 1;
+m = 5;
+J = m * L * L;
+rho = 5;
+Fx = m*g;
+Fy = m*g;
+M = 0;
+
+% 仿真时间尺度参数
+tInit = 0;
+tFinal = 5;
+
+% 物理模型初值
+y0 = pi/3;
+dydt0 = -.1;
+
+% f_modelName		= @(t, y, dydt) 这些项在微分方程中恒等于 d2ydt2
+f_phyPend			= @(~, y, ~)	-g/L * sin(y);
+f_phyMiniPend		= @(~, y, ~)	-g/L * y;
+f_rigidPend			= @(~, y, ~)	-m*g*L/J * sin(y);
+f_rigidDampPend		= @(~, y, dydt)	-m*g*L/J * sin(y) - rho/J * dydt;
+f_rigidDampTurbPend = @(~, y, dydt) -m*g*L/J * sin(y) - rho/J * dydt + M/J + L/J * (Fx*cos(y)+Fy*(sin(y)));
+
+% modelName			= @(t, X) [X(2); f_modelName(t, X(1), X(2))];
+phyPend				= @(t, X) [X(2); f_phyPend(t, X(1), X(2))];
+phyMiniPend			= @(t, X) [X(2); f_phyMiniPend(t, X(1), X(2))];
+rigidPend			= @(t, X) [X(2); f_rigidPend(t, X(1), X(2))];
+rigidDampPend		= @(t, X) [X(2); f_rigidDampPend(t, X(1), X(2))];
+rigidDampTurbPend	= @(t, X) [X(2); f_rigidDampTurbPend(t, X(1), X(2))];
+
+%% 一些测试例和可视化
+%  非刚性问题, MATLAB 内建了 ode23, ode45, ode113 三种求解器.
+%  MATLAB 帮助页:
+%  对于大多数非刚性问题，ode45 的性能最佳。
+%  但对于允许较宽松的误差容限或刚度适中的问题，建议使用 ode23。
+%  同样，对于具有严格误差容限的问题，ode113 可能比 ode45 更加高效。
+
+%%% 严格求解的单摆
+%  未指定输出参数会自行绘图
+
+fprintf('\theta_0 = %.3f, \theta_0'' = %.3f\n', y0, dydt0);
+ode45(rigidPend, [tInit, tFinal], [y0, dydt0]);
+
+%%% 小角近似的单摆
+fprintf('\theta_0 = %.3f, \theta_0'' = %.3f\n', y0, dydt0);
+[t, y] = ode45(phyMiniPend, [tInit, tFinal], [y0, dydt0]);
+figure;
+plot(t, y);
+legend({'\theta','d\theta/dt'});
+
+%%% 有常值扰动的刚体摆
+%  使用两种方法避免摆角数值成周期跑飞
+%  使用了新的 legend 图例指定方法
+[t, y] = ode45(rigidDampTurbPend, [tInit, tFinal], [y0, dydt0]);
+figure;
+hold on;
+plot(t, L * sin(y(:,1)), 'DisplayName','水平位置投影 - 三角限幅法');
+plot(t, y(:,2), 'DisplayName','角速度 - 角速度限幅法');
+hold off;
+legend;
+
+%%% 单摆, 小角近似的单摆, 刚体摆的对比
+%  在同一坐标下叠加绘制角速度
+figure; colormap(lines); hold on;
+[t, y1] = ode45(phyPend, [tInit, tFinal], [y0, dydt0]);
+plot(t, y1(:,2), 'LineStyle','REPLACE_WITH_DASH_DASH');
+[t, y2] = ode45(phyMiniPend, [tInit, tFinal], [y0, dydt0]);
+plot(t, y2(:,2));
+[t, y3] = ode45(rigidPend, [tInit, tFinal], [y0, dydt0]);
+plot(t, y3(:,2), 'LineStyle','-.');
+
+%%% 使用 pspectrum 对比分析
+%  上述三种情况, 角速度和角加速度的功率谱
+figure(1); [t, y1] = ode45(phyPend, [tInit, tFinal], [y0, dydt0]); pspectrum(y1, t, 'power');
+figure(2); [t, y2] = ode45(phyMiniPend, [tInit, tFinal], [y0, dydt0]); pspectrum(y2, t, 'power');
+figure(3); [t, y3] = ode45(rigidPend, [tInit, tFinal], [y0, dydt0]); pspectrum(y3, t, 'power');
+
+%%% 角度图示
+%  更友好的展示摆的位置
+[t, y] = ode45(rigidDampTurbPend, [tInit, tFinal], [y0, dydt0]);
+pendulumPlot(t, y);
+
+function pendulumPlot(t, y)
+	dt = diff(t);
+	figure('NumberTitle','off', 'MenuBar','none', 'ToolBar','none');
+	p = polarplot(y(1), 'o');
+	for i = 1:length(dt)
+		pause(dt(i));
+		p.ThetaData = y(i+1);
+		drawnow limitrate;
+	end
+end
+
+%% Deprecated
+% simulation timestep
+% 
+% t = 0;
+% dt = 1e-1;
+% tmax = 150;
+% 
+% m = 10;
+% g = 9.8;
+% l = 1;
+% 
+% theta0 = pi/3; % initial angular position in radians
+% d_theta0 = 0; % initial angular velocity in rad per sec
+% 
+% nTHD = 4; 
+% 
+% clc; close all;
+% 
+% tic;
+% 
+% Fs = 1/dt;
+% iter = 1;
+% iter_max = tmax/dt + 1;
+% 
+% f = figure(1);
+% f.Units = 'normalized';
+% f.Position = [0 0 .8 .3];
+% f.ToolBar = 'none'; f.MenuBar = 'none';
+% f.Name = '时域'; f.NumberTitle = 'off';
+% 
+% ax = axes(f, 'Units','normalized', 'Position',[.05,.15,.92,.8], 'NextPlot','add');
+% xlabel(ax, '\bf Time'); ylabel(ax, '\bf\theta');
+% 
+% cmap = colormap('lines'); % cmap = colormap('prism');
+% 
+% %h1 = animatedline('Color',cmap(1,:), 'LineWidth',2);
+% 	theta1 = theta0; d_theta1 = d_theta0;
+% %h2 = animatedline('Color',cmap(2,:), 'LineWidth',1);
+% 	theta2 = theta0; d_theta2 = d_theta0;
+% %h3 = animatedline('Color',cmap(3,:), 'LineWidth',1.4);
+% 	theta3 = theta0; d_theta3 = d_theta0;
+% 	
+% T = t:dt:tmax;
+% Y1 = zeros(iter_max, 1);
+% Y2 = zeros(iter_max, 1);
+% Y3 = zeros(iter_max, 1);
+% 
+% rng(0);
+% % delta_g = .9*g.*randn(iter_max, 1);
+%  delta_g = .2*g.*sin(2*pi*0.5*T);
+% 	
+% while iter <= iter_max
+% 	
+% %	addpoints(h1, t,theta1);
+% %	addpoints(h2, t,theta2);
+% %	addpoints(h3, t,theta3);
+%  
+% % 	plot(t,theta1, 'Color',cmap(1,:));
+% % 	plot(t,theta2, 'Color',cmap(2,:));
+% % 	plot(t,theta3, 'Color',cmap(3,:));
+% 
+% 	% T(iter) = t; 这种预分配的写法适用于固定时间步进，便于计算FFT、作图，也避免循环过程中更改数据维度。但存在效率问题
+% 	Y1(iter) = theta1;
+% 	Y2(iter) = theta2;
+% 	Y3(iter) = theta3;
+% 
+% 	theta1 = theta1 + dt * d_theta1;
+% 	theta2 = theta2 + dt * d_theta2;
+% 	theta3 = theta3 + dt * d_theta3;
+% 	
+% 	if theta3 >= pi
+% 		theta3 = theta3 - 2*pi;
+% 	elseif theta3 < -pi
+% 		theta3 = theta3 + 2*pi;
+% 	end
+% 	
+% 	d_theta1 = d_theta1 - dt * (g/l)*theta1;
+% 	d_theta2 = d_theta2 - dt * (g/l)*sin(theta2);
+% 	d_theta3 = d_theta3 - dt * ((g + delta_g(iter))/l)*sin(theta2);
+% 	
+% 	t = t + dt;
+% 	iter = iter + 1;
+% 	
+% end
+% 
+% plot(ax, T,Y1);
+% plot(ax, T,Y2);
+% %plot(ax, T,Y3);
+% legend(ax, {'小角近似','物理摆','硬解加扰动'}, 'FontSize',16);
+% 
+% % fft_Y1 = fft_Y1(1:iter_max/2+1); 如iter_max不是偶数将引发警告，但不是错误
+% % 冒号表达式以1步进，必定取整。可以抑制警告输出，也可手动下取整数
+% 
+% fft_Y1 = abs(fft(Y1)/iter_max); fft_Y1 = fft_Y1(1:floor(iter_max/2+1)); fft_Y1(2:end-1) = 2*fft_Y1(2:end-1);
+% fft_Y2 = abs(fft(Y2)/iter_max); fft_Y2 = fft_Y2(1:floor(iter_max/2+1)); fft_Y2(2:end-1) = 2*fft_Y2(2:end-1);
+% fft_Y3 = abs(fft(Y3)/iter_max); fft_Y3 = fft_Y3(1:floor(iter_max/2+1)); fft_Y3(2:end-1) = 2*fft_Y3(2:end-1);
+% 
+% fft_ng = abs(fft(delta_g)/iter_max); fft_ng = fft_ng(1:floor(iter_max/2+1)); fft_ng(2:end-1) = 2*fft_ng(2:end-1);
+% fft_ng = fft_ng/g;% 扰动量可以用比例衡量，需要归一化
+% 
+% fft_f = figure(2);
+% fft_f.Units = 'normalized';
+% fft_f.ToolBar = 'figure';
+% fft_f.MenuBar = 'none';
+% fft_f.Name = '频域'; fft_f.NumberTitle = 'off';
+% 
+% fft_ax = axes(fft_f, 'Units','normalized', 'Position',[.09,.13,.9,.85],...
+% 			'NextPlot','add', 'YLim',[1e-4, 2+my_max(fft_Y1,fft_Y2,fft_Y3,fft_ng)]);
+% fft_ax.XScale = 'log';
+% fft_ax.YScale = 'log';
+% fft_ax.XGrid = 'on';
+% fft_ax.YGrid = 'on';
+% % hold on; 等价于 gca.NextPlot = 'add'; 避免后面的plot导致前面的图冲掉
+% % 设置轴的X/YScale为log可以手动实现loglog图
+% % 也可以使用mag2db, pow2db
+% 
+% xlabel(fft_ax, '\bf 频率 (Hz)'); ylabel(fft_ax, '\bf 振幅 (m)');
+% 
+% plot(fft_ax, fft_Y1);
+% plot(fft_ax, fft_Y2);
+% %plot(fft_ax, fft_Y3);
+% plot(fft_ax, fft_ng);
+% 
+% [M1, I1] = max(fft_Y1); text(fft_ax, I1+15,M1, sprintf('%.3f@%.1f',M1,I1)); plot(I1,M1,'o');
+% [M2, I2] = max(fft_Y2); text(fft_ax, I2-49,M2, sprintf('%.3f@%.1f',M2,I2)); plot(I2,M2,'d');
+% [M3, I3] = max(fft_ng); text(fft_ax, I3,M3, sprintf('%.2f@%.1f',M3,I3)); plot(I3,M3,'x');
+% 
+% text(fft_ax, 1,2, sprintf('',1.23));
+% % sprintf可以向title, legend, text, xylabel等插入C风格的格式化字符串
+% % 单纯使用'string'插入则可以使用tex/latex风格的语法。可指定解释器
+% % 大概不可兼得？
+% 
+% legend(fft_ax, {'小角近似','物理摆','硬解加扰动','扰动'}, 'FontSize',16, 'Location','best');
+% 
+% f = 1/(2*pi)*sqrt(g/l);
+% % xlim([0, f*(nTHD+1)]);
+% 
+% toc;
+% function max_val = my_max(varargin)
+% 	temp_max = zeros(nargin, 1);
+% 	for i = 1:nargin
+% 		temp_max(i) = max(varargin{i});
+% 	end
+% 	max_val = max(temp_max);
+% end
+% 
+% 
+% 
+% 
+
+##### SOURCE END #####
+--></body></html>
